@@ -59,9 +59,35 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
     res.status(200).json(updatedBlogPost);
 });
 
+const partiallyUpdateBlogPostById = expressAsyncHandler(
+    async (req, res, next) => {
+        const { user, title, content, published } = req.body;
+
+        const blogData = {
+            ...(user !== undefined && { user }),
+            ...(title !== undefined && { title }),
+            ...(content !== undefined && { content }),
+            ...(published !== undefined && { published }),
+        };
+
+        const partiallyUpdatedBlogPost = await Blog.findByIdAndUpdate(
+            req.params.id,
+            blogData,
+            { new: true }
+        );
+
+        if (!partiallyUpdatedBlogPost) {
+            res.status(404).json({ message: "Blog post not found" });
+        }
+
+        res.status(200).json(partiallyUpdatedBlogPost);
+    }
+);
+
 export default {
     getAllBlogPosts,
     getBlogPostById,
     createBlogPost,
     updateBlogPostById,
+    partiallyUpdateBlogPostById,
 };

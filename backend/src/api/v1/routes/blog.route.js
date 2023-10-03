@@ -12,4 +12,6 @@ router.get("/blogs/:id", blogController.getBlogPostById);
 
 router.put("/blogs/:id", blogController.updateBlogPostById);
 
+router.patch("/blogs/:id", blogController.partiallyUpdateBlogPostById);
+
 export default router;
