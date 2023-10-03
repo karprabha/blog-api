@@ -33,7 +33,7 @@ const createBlogPost = expressAsyncHandler(async (req, res, next) => {
         published,
     });
 
-    res.status(201).json(createdBlog);
+    return res.status(201).json(createdBlog);
 });
 
 const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
@@ -53,10 +53,10 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
     );
 
     if (!updatedBlogPost) {
-        res.status(404).json({ message: "Blog post not found" });
+        return res.status(404).json({ message: "Blog post not found" });
     }
 
-    res.status(200).json(updatedBlogPost);
+    return res.status(200).json(updatedBlogPost);
 });
 
 const partiallyUpdateBlogPostById = expressAsyncHandler(
@@ -77,10 +77,10 @@ const partiallyUpdateBlogPostById = expressAsyncHandler(
         );
 
         if (!partiallyUpdatedBlogPost) {
-            res.status(404).json({ message: "Blog post not found" });
+            return res.status(404).json({ message: "Blog post not found" });
         }
 
-        res.status(200).json(partiallyUpdatedBlogPost);
+        return res.status(200).json(partiallyUpdatedBlogPost);
     }
 );
 
@@ -91,7 +91,7 @@ const deleteBlogPostById = expressAsyncHandler(async (req, res, next) => {
         return res.status(404).json({ message: "Blog post not found" });
     }
 
-    res.status(204).send();
+    return res.status(204).send();
 });
 
 export default {
