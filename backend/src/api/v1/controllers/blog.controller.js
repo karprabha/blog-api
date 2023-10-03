@@ -5,7 +5,7 @@ import Comment from "../models/comment.js";
 
 const getAllBlogs = expressAsyncHandler(async (req, res, next) => {
     const allBlogs = await Blog.find({}, "title content").exec();
-    res.json(allBlogs);
+    res.status(200).json(allBlogs);
 });
 
 const getBlogDetail = expressAsyncHandler(async (req, res, next) => {
@@ -20,7 +20,7 @@ const getBlogDetail = expressAsyncHandler(async (req, res, next) => {
         return next(err);
     }
 
-    res.json({ blog, comments });
+    res.status(200).json({ blog, comments });
 });
 
 export default { getAllBlogs, getBlogDetail };
