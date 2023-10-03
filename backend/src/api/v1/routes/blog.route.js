@@ -14,4 +14,6 @@ router.put("/blogs/:id", blogController.updateBlogPostById);
 
 router.patch("/blogs/:id", blogController.partiallyUpdateBlogPostById);
 
+router.delete("/blogs/:id", blogController.deleteBlogPostById);
+
 export default router;

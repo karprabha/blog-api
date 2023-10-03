@@ -84,10 +84,21 @@ const partiallyUpdateBlogPostById = expressAsyncHandler(
     }
 );
 
+const deleteBlogPostById = expressAsyncHandler(async (req, res, next) => {
+    const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+
+    if (!deletedBlog) {
+        return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    res.status(204).send();
+});
+
 export default {
     getAllBlogPosts,
     getBlogPostById,
     createBlogPost,
     updateBlogPostById,
     partiallyUpdateBlogPostById,
+    deleteBlogPostById,
 };
