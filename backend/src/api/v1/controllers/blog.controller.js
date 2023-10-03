@@ -3,12 +3,12 @@ import expressAsyncHandler from "express-async-handler";
 import Blog from "../models/blog.js";
 import Comment from "../models/comment.js";
 
-const getAllBlogs = expressAsyncHandler(async (req, res, next) => {
+const getAllBlogPosts = expressAsyncHandler(async (req, res, next) => {
     const allBlogs = await Blog.find({}, "title content").exec();
-    res.status(200).json(allBlogs);
+    return res.status(200).json(allBlogs);
 });
 
-const getBlogDetail = expressAsyncHandler(async (req, res, next) => {
+const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
     const [blog, comments] = await Promise.all([
         Blog.findById(req.params.id, "title content").exec(),
         Comment.find({ blog: req.params.id }).exec(),
@@ -20,7 +20,48 @@ const getBlogDetail = expressAsyncHandler(async (req, res, next) => {
         return next(err);
     }
 
-    res.status(200).json({ blog, comments });
+    return res.status(200).json({ blog, comments });
 });
 
-export default { getAllBlogs, getBlogDetail };
+const createBlogPost = expressAsyncHandler(async (req, res, next) => {
+    const { user, title, content, published } = req.body;
+
+    const createdBlog = await Blog.create({
+        user,
+        title,
+        content,
+        published,
+    });
+
+    res.status(201).json(createdBlog);
+});
+
+const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
+    const { user, title, content, published } = req.body;
+
+    const blogData = {
+        user,
+        title,
+        content,
+        published,
+    };
+
+    const updatedBlogPost = await Blog.findByIdAndUpdate(
+        req.params.id,
+        blogData,
+        { new: true }
+    );
+
+    if (!updatedBlogPost) {
+        res.status(404).json({ message: "Blog post not found" });
+    }
+
+    res.status(200).json(updatedBlogPost);
+});
+
+export default {
+    getAllBlogPosts,
+    getBlogPostById,
+    createBlogPost,
+    updateBlogPostById,
+};

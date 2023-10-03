@@ -4,8 +4,12 @@ import blogController from "../controllers/blog.controller.js";
 
 const router = Router();
 
-router.get("/blogs", blogController.getAllBlogs);
+router.get("/blogs", blogController.getAllBlogPosts);
 
-router.get("/blog/:id", blogController.getBlogDetail);
+router.post("/blogs", blogController.createBlogPost);
+
+router.get("/blogs/:id", blogController.getBlogPostById);
+
+router.put("/blogs/:id", blogController.updateBlogPostById);
 
 export default router;
