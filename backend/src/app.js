@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import createError from "http-errors";
 
 import databaseConfig from "./config/database.config.js";
-import v1Router from "./api/v1/routes/index.routes.js";
+import v1Router from "./api/v1/routes/index.route.js";
 
 const app = express();
 
