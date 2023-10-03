@@ -25,6 +25,16 @@ UserSchema.virtual("url").get(function () {
     return `/api/v1/users/${this._id}`;
 });
 
+UserSchema.pre("remove", async function (next) {
+    try {
+        await this.model("Blog").deleteMany({ user: this._id });
+        await this.model("Comment").deleteMany({ user: this._id });
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const User = model("User", UserSchema);
 
 export default User;
