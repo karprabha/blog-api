@@ -15,9 +15,7 @@ const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
     ]);
 
     if (!blog) {
-        const err = new Error("Book not found");
-        err.status = 404;
-        return next(err);
+        return res.status(404).json({ message: "Blog post not found" });
     }
 
     return res.status(200).json({ blog, comments });

@@ -27,9 +27,7 @@ const getUserById = expressAsyncHandler(async (req, res, next) => {
     ]);
 
     if (!user) {
-        const err = new Error("Book not found");
-        err.status = 404;
-        return next(err);
+        return res.status(404).json({ message: "User not found" });
     }
 
     return res.status(200).json({ user, blogs, comments });
