@@ -10,4 +10,6 @@ router.post("/users", userController.createUser);
 
 router.get("/users/:id", userController.getUserById);
 
+router.put("/users/:id", userController.updateUserById);
+
 export default router;

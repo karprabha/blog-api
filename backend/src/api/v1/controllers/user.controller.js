@@ -46,11 +46,34 @@ const createUser = expressAsyncHandler(async (req, res, next) => {
         password,
     });
 
-    return res.send(201).json(createdUser);
+    return res.status(201).json(createdUser);
+});
+
+const updateUserById = expressAsyncHandler(async (req, res, next) => {
+    const { first_name, family_name, username } = req.body;
+    const password = await bcrypt.hash(req.body.password, 10);
+
+    const userData = {
+        first_name,
+        family_name,
+        username,
+        password,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, userData, {
+        new: true,
+    });
+
+    if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(updatedUser);
 });
 
 export default {
     getAllUsers,
     getUserById,
     createUser,
+    updateUserById,
 };
