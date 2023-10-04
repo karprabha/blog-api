@@ -71,9 +71,38 @@ const updateUserById = expressAsyncHandler(async (req, res, next) => {
     return res.status(200).json(updatedUser);
 });
 
+const partiallyUpdateUserById = expressAsyncHandler(async (req, res, next) => {
+    const { first_name, family_name, username } = req.body;
+    const password = req.body.password
+        ? await bcrypt.hash(req.body.password, 10)
+        : undefined;
+
+    const userData = {
+        ...(first_name !== undefined && { first_name }),
+        ...(family_name !== undefined && { family_name }),
+        ...(username !== undefined && { username }),
+        ...(password !== undefined && { password }),
+    };
+
+    const partiallyUpdatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        userData,
+        {
+            new: true,
+        }
+    );
+
+    if (!partiallyUpdatedUser) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(partiallyUpdatedUser);
+});
+
 export default {
     getAllUsers,
     getUserById,
     createUser,
     updateUserById,
+    partiallyUpdateUserById,
 };
