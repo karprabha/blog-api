@@ -45,4 +45,38 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
     return res.status(201).json(createdComment);
 });
 
-export default { getAllComments, getCommentById, createComment };
+const updateCommentById = expressAsyncHandler(async (req, res, next) => {
+    const { user, text } = req.body;
+
+    const existingBlog = await Blog.findById(req.params.blogId);
+
+    if (!existingBlog) {
+        return res.status(404).json({ message: "Blog for comment not found" });
+    }
+
+    const blog = req.params.blogId;
+    const commentData = {
+        user,
+        blog,
+        text,
+    };
+
+    const updatedComment = await Comment.findByIdAndUpdate(
+        req.params.id,
+        commentData,
+        { new: true }
+    );
+
+    if (!updatedComment) {
+        return res.status(404).json({ message: "Comment not found" });
+    }
+
+    return res.status(200).json(updatedComment);
+});
+
+export default {
+    getAllComments,
+    getCommentById,
+    createComment,
+    updateCommentById,
+};

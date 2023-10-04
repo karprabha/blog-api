@@ -10,4 +10,6 @@ router.post("/comments", commentController.createComment);
 
 router.get("/comments/:id", commentController.getCommentById);
 
+router.put("/comments/:id", commentController.updateCommentById);
+
 export default router;
