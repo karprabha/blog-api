@@ -6,4 +6,6 @@ const router = Router({ mergeParams: true });
 
 router.get("/comments", commentController.getAllComments);
 
+router.get("/comments/:id", commentController.getCommentById);
+
 export default router;
