@@ -74,9 +74,57 @@ const updateCommentById = expressAsyncHandler(async (req, res, next) => {
     return res.status(200).json(updatedComment);
 });
 
+const partiallyUpdateCommentById = expressAsyncHandler(
+    async (req, res, next) => {
+        const { user, text } = req.body;
+
+        const existingBlog = await Blog.findById(req.params.blogId);
+
+        if (!existingBlog) {
+            return res
+                .status(404)
+                .json({ message: "Blog for comment not found" });
+        }
+
+        const blog = req.params.blogId;
+        const commentData = {
+            ...(user !== undefined && { user }),
+            ...(blog !== undefined && { blog }),
+            ...(text !== undefined && { text }),
+        };
+
+        const partiallyUpdatedComment = await Comment.findByIdAndUpdate(
+            req.params.id,
+            commentData,
+            { new: true }
+        );
+
+        if (!partiallyUpdatedComment) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
+
+        return res.status(200).json(partiallyUpdatedComment);
+    }
+);
+
+const deleteCommentById = expressAsyncHandler(async (req, res, next) => {
+    const deletedComment = await Comment.findOneAndDelete({
+        blog: req.params.blogId,
+        _id: req.params.id,
+    });
+
+    if (!deletedComment) {
+        return res.status(404).json({ message: "Comment not found" });
+    }
+
+    return res.status(204).send();
+});
+
 export default {
     getAllComments,
     getCommentById,
     createComment,
     updateCommentById,
+    partiallyUpdateCommentById,
+    deleteCommentById,
 };

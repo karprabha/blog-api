@@ -12,4 +12,8 @@ router.get("/comments/:id", commentController.getCommentById);
 
 router.put("/comments/:id", commentController.updateCommentById);
 
+router.patch("/comments/:id", commentController.partiallyUpdateCommentById);
+
+router.delete("/comments/:id", commentController.deleteCommentById);
+
 export default router;
