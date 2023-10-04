@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
 
 import User from "../models/user.js";
@@ -34,7 +35,22 @@ const getUserById = expressAsyncHandler(async (req, res, next) => {
     return res.status(200).json({ user, blogs, comments });
 });
 
+const createUser = expressAsyncHandler(async (req, res, next) => {
+    const { first_name, family_name, username } = req.body;
+    const password = await bcrypt.hash(req.body.password, 10);
+
+    const createdUser = await User.create({
+        first_name,
+        family_name,
+        username,
+        password,
+    });
+
+    return res.send(201).json(createdUser);
+});
+
 export default {
     getAllUsers,
     getUserById,
+    createUser,
 };
