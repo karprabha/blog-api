@@ -14,4 +14,6 @@ router.put("/users/:id", userController.updateUserById);
 
 router.patch("/users/:id", userController.partiallyUpdateUserById);
 
+router.delete("/users/:id", userController.deleteUserById);
+
 export default router;
