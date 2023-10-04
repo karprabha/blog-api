@@ -22,7 +22,7 @@ const getCommentById = expressAsyncHandler(async (req, res, next) => {
         return res.status(404).json({ message: "Comment not found" });
     }
 
-    res.status(200).json(comment);
+    return res.status(200).json(comment);
 });
 
 const createComment = expressAsyncHandler(async (req, res, next) => {
