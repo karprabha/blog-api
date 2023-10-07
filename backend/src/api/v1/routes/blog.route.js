@@ -2,20 +2,29 @@ import { Router } from "express";
 
 import commentRouter from "./comment.route.js";
 import blogController from "../controllers/blog.controller.js";
+import authenticateToken from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.get("/blogs", blogController.getAllBlogPosts);
 
-router.post("/blogs", blogController.createBlogPost);
+router.post("/blogs", authenticateToken, blogController.createBlogPost);
 
 router.get("/blogs/:id", blogController.getBlogPostById);
 
-router.put("/blogs/:id", blogController.updateBlogPostById);
+router.put("/blogs/:id", authenticateToken, blogController.updateBlogPostById);
 
-router.patch("/blogs/:id", blogController.partiallyUpdateBlogPostById);
+router.patch(
+    "/blogs/:id",
+    authenticateToken,
+    blogController.partiallyUpdateBlogPostById
+);
 
-router.delete("/blogs/:id", blogController.deleteBlogPostById);
+router.delete(
+    "/blogs/:id",
+    authenticateToken,
+    blogController.deleteBlogPostById
+);
 
 router.use("/blogs/:blogId", commentRouter);
 
