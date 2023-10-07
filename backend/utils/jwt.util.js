@@ -11,7 +11,8 @@ const generateRefreshToken = (payload) =>
 
 const verifyAccessToken = (token) => {
     try {
-        const decoded = jwt.verify(token, secretKey);
+        const tokenWithoutBearer = token.split(" ")[1];
+        const decoded = jwt.verify(tokenWithoutBearer, secretKey);
         return decoded;
     } catch (error) {
         return null;
