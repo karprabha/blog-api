@@ -1,8 +1,10 @@
 import { Router } from "express";
 
-import commentController from "../controllers/comment.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
+import commentValidator from "../validators/comment.validator.js";
 import checkOwnership from "../middlewares/ownership.middleware.js";
+import commentController from "../controllers/comment.controller.js";
+import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router({ mergeParams: true });
 
@@ -14,6 +16,8 @@ router.post(
     "/comments",
     authMiddleware.authenticateToken,
     authMiddleware.authorizeRoles(["admin", "user"]),
+    commentValidator.createCommentValidator,
+    queryValidationMiddleware,
     commentController.createComment
 );
 
@@ -22,6 +26,8 @@ router.put(
     authMiddleware.authenticateToken,
     authMiddleware.authorizeRoles(["admin", "user"]),
     checkOwnership("comment"),
+    commentValidator.updateCommentValidator,
+    queryValidationMiddleware,
     commentController.updateCommentById
 );
 
@@ -30,6 +36,8 @@ router.patch(
     authMiddleware.authenticateToken,
     authMiddleware.authorizeRoles(["admin", "user"]),
     checkOwnership("comment"),
+    commentValidator.partiallyUpdateCommentValidator,
+    queryValidationMiddleware,
     commentController.partiallyUpdateCommentById
 );
 
@@ -38,6 +46,8 @@ router.delete(
     authMiddleware.authenticateToken,
     authMiddleware.authorizeRoles(["admin", "user"]),
     checkOwnership("comment"),
+    commentValidator.deleteCommentValidator,
+    queryValidationMiddleware,
     commentController.deleteCommentById
 );
 
