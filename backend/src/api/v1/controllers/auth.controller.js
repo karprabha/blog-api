@@ -74,7 +74,7 @@ const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
 
     const decoded = jwt.verifyRefreshToken(refreshToken);
 
-    if (!decoded || decoded.user_id !== refresh.user.toJSON()) {
+    if (!decoded || decoded.user_id !== refresh.user.toString()) {
         return res.status(401).json({ message: "Invalid refresh token." });
     }
 
