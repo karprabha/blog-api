@@ -26,7 +26,8 @@ const getCommentById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const createComment = expressAsyncHandler(async (req, res, next) => {
-    const { author, text } = req.body;
+    const { text } = req.body;
+    const author = req.user.id;
 
     // Handle this in validation
     const existingBlog = await Blog.findById(req.params.blogId);
@@ -46,7 +47,8 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
 });
 
 const updateCommentById = expressAsyncHandler(async (req, res, next) => {
-    const { author, text } = req.body;
+    const { text } = req.body;
+    const author = req.user.id;
 
     const existingBlog = await Blog.findById(req.params.blogId);
 
@@ -76,7 +78,8 @@ const updateCommentById = expressAsyncHandler(async (req, res, next) => {
 
 const partiallyUpdateCommentById = expressAsyncHandler(
     async (req, res, next) => {
-        const { author, text } = req.body;
+        const { text } = req.body;
+        const author = req.user.id;
 
         const existingBlog = await Blog.findById(req.params.blogId);
 
