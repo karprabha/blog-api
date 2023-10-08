@@ -7,7 +7,11 @@ import checkOwnership from "../middlewares/ownership.middleware.js";
 
 const router = Router();
 
+router.use("/blogs/:blogId", commentRouter);
+
 router.get("/blogs", blogController.getAllBlogPosts);
+
+router.get("/blogs/:id", blogController.getBlogPostById);
 
 router.post(
     "/blogs",
@@ -15,8 +19,6 @@ router.post(
     authMiddleware.authorizeRoles(["admin"]),
     blogController.createBlogPost
 );
-
-router.get("/blogs/:id", blogController.getBlogPostById);
 
 router.put(
     "/blogs/:id",
@@ -41,7 +43,5 @@ router.delete(
     checkOwnership("blog"),
     blogController.deleteBlogPostById
 );
-
-router.use("/blogs/:blogId", commentRouter);
 
 export default router;
