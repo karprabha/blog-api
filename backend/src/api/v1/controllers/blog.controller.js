@@ -24,7 +24,8 @@ const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const createBlogPost = expressAsyncHandler(async (req, res, next) => {
-    const { author, title, content, published } = req.body;
+    const { title, content, published } = req.body;
+    const author = req.user.id;
 
     const createdBlog = await Blog.create({
         author,
@@ -37,7 +38,8 @@ const createBlogPost = expressAsyncHandler(async (req, res, next) => {
 });
 
 const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
-    const { author, title, content, published } = req.body;
+    const { title, content, published } = req.body;
+    const author = req.user.id;
 
     const blogData = {
         author,
@@ -61,7 +63,8 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
 
 const partiallyUpdateBlogPostById = expressAsyncHandler(
     async (req, res, next) => {
-        const { author, title, content, published } = req.body;
+        const { title, content, published } = req.body;
+        const author = req.user.id;
 
         const blogData = {
             ...(author !== undefined && { author }),
