@@ -78,12 +78,7 @@ const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
         return res.status(401).json({ message: "Invalid refresh token." });
     }
 
-    const user = {
-        user_id: decoded.user_id,
-        first_name: decoded.first_name,
-        family_name: decoded.family_name,
-        username: decoded.username,
-    };
+    const user = { user_id: decoded.user_id };
 
     const accessToken = jwt.generateAccessToken(user);
 
