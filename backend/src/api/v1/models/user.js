@@ -5,7 +5,7 @@ const UserSchema = new Schema({
     family_name: { type: String, required: true, maxLength: 100 },
     username: { type: String, required: true, maxLength: 50 },
     password: { type: String, required: true, maxLength: 128 },
-    membership_status: {
+    role: {
         type: String,
         enum: ["user", "admin"],
         default: "user",
@@ -27,8 +27,8 @@ UserSchema.virtual("url").get(function () {
 
 UserSchema.pre("remove", async function (next) {
     try {
-        await this.model("Blog").deleteMany({ user: this._id });
-        await this.model("Comment").deleteMany({ user: this._id });
+        await this.model("Blog").deleteMany({ author: this._id });
+        await this.model("Comment").deleteMany({ author: this._id });
         next();
     } catch (error) {
         next(error);

@@ -21,7 +21,7 @@ async function userCreate(
     family_name,
     username,
     original_password,
-    membership_status
+    role
 ) {
     const password = await bcrypt.hash(original_password, 10);
     const user = new User({
@@ -29,7 +29,7 @@ async function userCreate(
         family_name,
         username,
         password,
-        membership_status,
+        role,
     });
 
     await user.save();
@@ -37,9 +37,9 @@ async function userCreate(
     console.log(`Added user: ${username}`);
 }
 
-async function blogCreate(user, title, content, published) {
+async function blogCreate(author, title, content, published) {
     const blog = new Blog({
-        user,
+        author,
         title,
         content,
         published,
@@ -50,10 +50,10 @@ async function blogCreate(user, title, content, published) {
     console.log(`Added blog: ${title}`);
 }
 
-async function commentCreate(user, blog, text) {
+async function commentCreate(author, blogPost, text) {
     const comment = new Comment({
-        user,
-        blog,
+        author,
+        blogPost,
         text,
     });
 

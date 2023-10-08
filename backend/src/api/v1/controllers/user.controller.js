@@ -8,7 +8,7 @@ import Comment from "../models/comment.js";
 const getAllUsers = expressAsyncHandler(async (req, res, next) => {
     const allUsers = await User.find(
         {},
-        "first_name family_name username membership_status"
+        "first_name family_name username role"
     ).exec();
 
     res.status(200).json(allUsers);
@@ -16,13 +16,10 @@ const getAllUsers = expressAsyncHandler(async (req, res, next) => {
 
 const getUserById = expressAsyncHandler(async (req, res, next) => {
     const [user, blogs, comments] = await Promise.all([
-        User.findById(
-            req.params.id,
-            "first_name family_name username membership_status"
-        ),
-        Blog.find({ user: req.params.id }, "title content"),
-        Comment.find({ user: req.params.id }, "text")
-            .populate("blog", "title")
+        User.findById(req.params.id, "first_name family_name username role"),
+        Blog.find({ author: req.params.id }, "title content"),
+        Comment.find({ author: req.params.id }, "text")
+            .populate("blogPost", "title")
             .exec(),
     ]);
 

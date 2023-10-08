@@ -4,18 +4,18 @@ import Blog from "../models/blog.js";
 import Comment from "../models/comment.js";
 
 const getAllComments = expressAsyncHandler(async (req, res, next) => {
-    const allComments = await Comment.find({ blog: req.params.blogId })
-        .populate("user", "username")
+    const allComments = await Comment.find({ blogPost: req.params.blogId })
+        .populate("author", "username")
         .exec();
     return res.status(200).json(allComments);
 });
 
 const getCommentById = expressAsyncHandler(async (req, res, next) => {
     const comment = await Comment.find({
-        blog: req.params.blogId,
+        blogPost: req.params.blogId,
         _id: req.params.id,
     })
-        .populate("user", "first_name family_name username")
+        .populate("author", "first_name family_name username")
         .exec();
 
     if (!comment) {
@@ -26,7 +26,7 @@ const getCommentById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const createComment = expressAsyncHandler(async (req, res, next) => {
-    const { user, text } = req.body;
+    const { author, text } = req.body;
 
     // Handle this in validation
     const existingBlog = await Blog.findById(req.params.blogId);
@@ -35,10 +35,10 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
         return res.status(404).json({ message: "Blog for comment not found" });
     }
 
-    const blog = req.params.blogId;
+    const blogPost = req.params.blogId;
     const createdComment = await Comment.create({
-        user,
-        blog,
+        author,
+        blogPost,
         text,
     });
 
@@ -46,7 +46,7 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
 });
 
 const updateCommentById = expressAsyncHandler(async (req, res, next) => {
-    const { user, text } = req.body;
+    const { author, text } = req.body;
 
     const existingBlog = await Blog.findById(req.params.blogId);
 
@@ -54,10 +54,10 @@ const updateCommentById = expressAsyncHandler(async (req, res, next) => {
         return res.status(404).json({ message: "Blog for comment not found" });
     }
 
-    const blog = req.params.blogId;
+    const blogPost = req.params.blogId;
     const commentData = {
-        user,
-        blog,
+        author,
+        blogPost,
         text,
     };
 
@@ -76,7 +76,7 @@ const updateCommentById = expressAsyncHandler(async (req, res, next) => {
 
 const partiallyUpdateCommentById = expressAsyncHandler(
     async (req, res, next) => {
-        const { user, text } = req.body;
+        const { author, text } = req.body;
 
         const existingBlog = await Blog.findById(req.params.blogId);
 
@@ -86,10 +86,10 @@ const partiallyUpdateCommentById = expressAsyncHandler(
                 .json({ message: "Blog for comment not found" });
         }
 
-        const blog = req.params.blogId;
+        const blogPost = req.params.blogId;
         const commentData = {
-            ...(user !== undefined && { user }),
-            ...(blog !== undefined && { blog }),
+            ...(author !== undefined && { author }),
+            ...(blogPost !== undefined && { blogPost }),
             ...(text !== undefined && { text }),
         };
 
@@ -109,7 +109,7 @@ const partiallyUpdateCommentById = expressAsyncHandler(
 
 const deleteCommentById = expressAsyncHandler(async (req, res, next) => {
     const deletedComment = await Comment.findOneAndDelete({
-        blog: req.params.blogId,
+        blogPost: req.params.blogId,
         _id: req.params.id,
     });
 

@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const BlogSchema = new Schema(
     {
-        user: {
+        author: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,

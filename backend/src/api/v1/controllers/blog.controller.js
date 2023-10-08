@@ -10,8 +10,10 @@ const getAllBlogPosts = expressAsyncHandler(async (req, res, next) => {
 
 const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
     const [blog, comments] = await Promise.all([
-        Blog.findById(req.params.id, "title content").exec(),
-        Comment.find({ blog: req.params.id }).exec(),
+        Blog.findById(req.params.id, "title content")
+            .populate("author", "first_name family_name username")
+            .exec(),
+        Comment.find({ blogPost: req.params.id }).exec(),
     ]);
 
     if (!blog) {
@@ -22,10 +24,10 @@ const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const createBlogPost = expressAsyncHandler(async (req, res, next) => {
-    const { user, title, content, published } = req.body;
+    const { author, title, content, published } = req.body;
 
     const createdBlog = await Blog.create({
-        user,
+        author,
         title,
         content,
         published,
@@ -35,10 +37,10 @@ const createBlogPost = expressAsyncHandler(async (req, res, next) => {
 });
 
 const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
-    const { user, title, content, published } = req.body;
+    const { author, title, content, published } = req.body;
 
     const blogData = {
-        user,
+        author,
         title,
         content,
         published,
@@ -59,10 +61,10 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
 
 const partiallyUpdateBlogPostById = expressAsyncHandler(
     async (req, res, next) => {
-        const { user, title, content, published } = req.body;
+        const { author, title, content, published } = req.body;
 
         const blogData = {
-            ...(user !== undefined && { user }),
+            ...(author !== undefined && { author }),
             ...(title !== undefined && { title }),
             ...(content !== undefined && { content }),
             ...(published !== undefined && { published }),
