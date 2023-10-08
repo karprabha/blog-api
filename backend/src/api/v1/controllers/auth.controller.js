@@ -40,19 +40,16 @@ const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
         return res.status(400).json({ message: "Refresh token is required." });
     }
 
-    const decoded = jwt.verifyRefreshToken(refreshToken);
-
-    if (!decoded) {
-        return res.status(401).json({ message: "Invalid refresh token." });
-    }
-
-    const refresh = await RefreshToken.findOne({
-        user: decoded.user_id,
-        token: refreshToken,
-    });
+    const refresh = await RefreshToken.findOne({ token: refreshToken });
 
     if (!refresh) {
         return res.status(401).json({ message: "Refresh token not found." });
+    }
+
+    const decoded = jwt.verifyRefreshToken(refreshToken);
+
+    if (!decoded || decoded.user_id !== refresh.user.toJSON()) {
+        return res.status(401).json({ message: "Invalid refresh token." });
     }
 
     const user = {
