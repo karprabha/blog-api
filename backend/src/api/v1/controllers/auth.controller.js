@@ -3,6 +3,8 @@ import expressAsyncHandler from "express-async-handler";
 import jwt from "../../../../utils/jwt.util.js";
 import authService from "../services/auth.service.js";
 
+import RefreshToken from "../models/refreshToken.js";
+
 const login = expressAsyncHandler(async (req, res, next) => {
     const user = await authService.authenticateUser(req.body);
 
@@ -12,6 +14,21 @@ const login = expressAsyncHandler(async (req, res, next) => {
 
     const accessToken = jwt.generateAccessToken(user);
     const refreshToken = jwt.generateRefreshToken(user);
+
+    const existingRefreshToken = await RefreshToken.findOne({
+        user: user.user_id,
+    });
+
+    if (existingRefreshToken) {
+        existingRefreshToken.token = refreshToken;
+        await existingRefreshToken.save();
+    } else {
+        const refresh = new RefreshToken({
+            user: user.user_id,
+            token: refreshToken,
+        });
+        await refresh.save();
+    }
 
     return res.json({ accessToken, refreshToken });
 });
@@ -29,8 +46,17 @@ const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
         return res.status(401).json({ message: "Invalid refresh token." });
     }
 
+    const refresh = await RefreshToken.findOne({
+        user: decoded.user_id,
+        token: refreshToken,
+    });
+
+    if (!refresh) {
+        return res.status(401).json({ message: "Refresh token not found." });
+    }
+
     const user = {
-        user_id: decoded._id,
+        user_id: decoded.user_id,
         first_name: decoded.first_name,
         family_name: decoded.family_name,
         username: decoded.username,
