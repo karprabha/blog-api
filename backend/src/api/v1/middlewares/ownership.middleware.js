@@ -11,7 +11,7 @@ const models = {
 const checkOwnership = (resourceType) => async (req, res, next) => {
     try {
         const resourceId = req.params.id;
-        const userIdFromToken = req.user._id;
+        const userIdFromToken = req.user.id;
 
         const Model = models[resourceType];
 
@@ -26,11 +26,10 @@ const checkOwnership = (resourceType) => async (req, res, next) => {
         }
 
         const isAuthorNotMatching = resource.author
-            ? resource.author.toString() !== userIdFromToken.toString()
+            ? resource.author.toString() !== userIdFromToken
             : true;
 
-        const isUserIdNotMatching =
-            resource._id.toString() !== userIdFromToken.toString();
+        const isUserIdNotMatching = resource._id.toString() !== userIdFromToken;
 
         if (isAuthorNotMatching && isUserIdNotMatching) {
             return res

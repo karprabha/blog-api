@@ -17,13 +17,23 @@ const authenticateToken = async (req, res, next) => {
             return res.status(401).json({ message: "Invalid token." });
         }
 
-        const user = await User.findById(decoded.user_id);
+        const user = await User.findById(
+            decoded.user_id,
+            "first_name family_name username role"
+        );
 
         if (!user) {
             return res.status(401).json({ message: "User not found." });
         }
 
-        req.user = user;
+        const { _id, first_name, family_name, username, role } = user;
+        req.user = {
+            id: _id.toString(),
+            first_name,
+            family_name,
+            username,
+            role,
+        };
         return next();
     } catch (error) {
         return res.status(401).json({ message: "Invalid token." });
