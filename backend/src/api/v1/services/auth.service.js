@@ -16,9 +16,12 @@ const authenticateUser = async ({ username, password }) => {
             return null;
         }
 
-        const { password: _, ...userWithoutPassword } = user.toObject();
-
-        return userWithoutPassword;
+        return {
+            user_id: user._id,
+            first_name: user.first_name,
+            family_name: user.family_name,
+            username: user.username,
+        };
     } catch (error) {
         console.error("Authentication error:", error);
         return null;
