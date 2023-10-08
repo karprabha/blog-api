@@ -7,7 +7,7 @@ import RefreshToken from "./refreshToken.js";
 const UserSchema = new Schema({
     first_name: { type: String, required: true, maxLength: 100 },
     family_name: { type: String, required: true, maxLength: 100 },
-    username: { type: String, required: true, maxLength: 50 },
+    username: { type: String, required: true, maxLength: 50, unique: true },
     password: { type: String, required: true, maxLength: 128 },
     role: {
         type: String,
