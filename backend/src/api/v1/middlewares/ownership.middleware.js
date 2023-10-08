@@ -25,10 +25,14 @@ const checkOwnership = (resourceType) => async (req, res, next) => {
             return res.status(404).json({ message: "Resource not found" });
         }
 
-        if (
-            resource.author.toString() !== userIdFromToken.toString() &&
-            resource._id.toString() !== userIdFromToken.toString()
-        ) {
+        const isAuthorNotMatching = resource.author
+            ? resource.author.toString() !== userIdFromToken.toString()
+            : true;
+
+        const isUserIdNotMatching =
+            resource._id.toString() !== userIdFromToken.toString();
+
+        if (isAuthorNotMatching && isUserIdNotMatching) {
             return res
                 .status(403)
                 .json({ message: "Access denied. Insufficient permissions." });
