@@ -1,5 +1,8 @@
 import { Schema, model } from "mongoose";
 
+import Blog from "./blog.js";
+import Comment from "./comment.js";
+
 const UserSchema = new Schema({
     first_name: { type: String, required: true, maxLength: 100 },
     family_name: { type: String, required: true, maxLength: 100 },
@@ -25,10 +28,11 @@ UserSchema.virtual("url").get(function () {
     return `/api/v1/users/${this._id}`;
 });
 
-UserSchema.pre("remove", async function (next) {
+UserSchema.pre("findOneAndDelete", async function (next) {
+    const userId = this.getQuery()._id;
     try {
-        await this.model("Blog").deleteMany({ author: this._id });
-        await this.model("Comment").deleteMany({ author: this._id });
+        await Blog.deleteMany({ author: userId });
+        await Comment.deleteMany({ author: userId });
         next();
     } catch (error) {
         next(error);

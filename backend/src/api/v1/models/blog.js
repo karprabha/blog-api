@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+import Comment from "./comment.js";
+
 const BlogSchema = new Schema(
     {
         author: {
@@ -22,6 +24,15 @@ const BlogSchema = new Schema(
 
 BlogSchema.virtual("url").get(function () {
     return `/api/v1/blogs/${this._id}`;
+});
+
+BlogSchema.pre("findOneAndDelete", async function (next) {
+    try {
+        await Comment.deleteMany({ blogPost: this.getQuery()._id });
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 const Blog = model("Blog", BlogSchema);
