@@ -33,6 +33,32 @@ const login = expressAsyncHandler(async (req, res, next) => {
     return res.json({ accessToken, refreshToken });
 });
 
+const logout = async (req, res) => {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+        return res.status(400).json({ message: "Refresh token is required." });
+    }
+
+    try {
+        const deletedToken = await RefreshToken.findOneAndDelete({
+            token: refreshToken,
+        });
+
+        if (!deletedToken) {
+            return res.status(404).json({ message: "Token not found." });
+        }
+
+        console.log(`User with ID ${deletedToken.user} logged out.`);
+
+        return res.status(200).json({ message: "Logout successful." });
+    } catch (error) {
+        console.error("Logout error:", error);
+
+        return res.status(500).json({ message: "Internal server error." });
+    }
+};
+
 const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
     const { refreshToken } = req.body;
 
@@ -66,5 +92,6 @@ const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
 
 export default {
     login,
+    logout,
     refreshAccessToken,
 };
