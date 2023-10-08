@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 import Blog from "./blog.js";
 import Comment from "./comment.js";
+import RefreshToken from "./refreshToken.js";
 
 const UserSchema = new Schema({
     first_name: { type: String, required: true, maxLength: 100 },
@@ -33,6 +34,7 @@ UserSchema.pre("findOneAndDelete", async function (next) {
     try {
         await Blog.deleteMany({ author: userId });
         await Comment.deleteMany({ author: userId });
+        await RefreshToken.deleteOne({ user: userId });
         next();
     } catch (error) {
         next(error);
