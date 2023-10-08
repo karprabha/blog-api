@@ -1,6 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
 
-import Blog from "../models/blog.js";
 import Comment from "../models/comment.js";
 
 const getAllComments = expressAsyncHandler(async (req, res, next) => {
@@ -29,13 +28,6 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
     const { text } = req.body;
     const author = req.user.id;
 
-    // Handle this in validation
-    const existingBlog = await Blog.findById(req.params.blogId);
-
-    if (!existingBlog) {
-        return res.status(404).json({ message: "Blog for comment not found" });
-    }
-
     const blogPost = req.params.blogId;
     const createdComment = await Comment.create({
         author,
@@ -49,12 +41,6 @@ const createComment = expressAsyncHandler(async (req, res, next) => {
 const updateCommentById = expressAsyncHandler(async (req, res, next) => {
     const { text } = req.body;
     const author = req.user.id;
-
-    const existingBlog = await Blog.findById(req.params.blogId);
-
-    if (!existingBlog) {
-        return res.status(404).json({ message: "Blog for comment not found" });
-    }
 
     const blogPost = req.params.blogId;
     const commentData = {
@@ -80,14 +66,6 @@ const partiallyUpdateCommentById = expressAsyncHandler(
     async (req, res, next) => {
         const { text } = req.body;
         const author = req.user.id;
-
-        const existingBlog = await Blog.findById(req.params.blogId);
-
-        if (!existingBlog) {
-            return res
-                .status(404)
-                .json({ message: "Blog for comment not found" });
-        }
 
         const blogPost = req.params.blogId;
         const commentData = {
