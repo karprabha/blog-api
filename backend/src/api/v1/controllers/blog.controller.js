@@ -12,7 +12,10 @@ const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
         Blog.findById(req.params.id, "title content")
             .populate("author", "first_name family_name username")
             .exec(),
-        Comment.find({ blogPost: req.params.id }).exec(),
+        Comment.find({ blogPost: req.params.id })
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .exec(),
     ]);
 
     if (!blog) {
