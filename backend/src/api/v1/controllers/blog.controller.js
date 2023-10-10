@@ -4,8 +4,7 @@ import Blog from "../models/blog.js";
 import Comment from "../models/comment.js";
 
 const getAllBlogPosts = expressAsyncHandler(async (req, res, next) => {
-    const allBlogs = await Blog.find({}, "title content").exec();
-    return res.status(200).json(allBlogs);
+    res.status(200).json(req.paginatedResults);
 });
 
 const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
