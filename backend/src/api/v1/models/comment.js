@@ -10,8 +10,8 @@ const CommentSchema = new Schema(
 );
 
 CommentSchema.index({ author: 1 });
-
 CommentSchema.index({ blogPost: 1 });
+CommentSchema.index({ createdAt: -1 });
 
 const Comment = model("Comment", CommentSchema);
 
