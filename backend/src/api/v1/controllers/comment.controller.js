@@ -1,12 +1,30 @@
 import expressAsyncHandler from "express-async-handler";
 
+import User from "../models/user.js";
 import Comment from "../models/comment.js";
 
 const getAllComments = expressAsyncHandler(async (req, res, next) => {
-    const allComments = await Comment.find({ blogPost: req.params.blogId })
-        .populate("author", "username")
-        .exec();
-    return res.status(200).json(allComments);
+    const comments = req.paginatedResults.results;
+
+    const authorIds = comments
+        .filter((comment) => comment.author)
+        .map((comment) => comment.author);
+
+    const authors = await User.find(
+        { _id: { $in: authorIds } },
+        "first_name family_name username"
+    );
+
+    const authorMap = new Map(
+        authors.map((author) => [author._id.toString(), author])
+    );
+
+    for (let i = 0; i < comments.length; i += 1) {
+        if (comments[i].author)
+            comments[i].author = authorMap.get(comments[i].author.toString());
+    }
+    req.paginatedResults.results = comments;
+    res.status(200).json(req.paginatedResults);
 });
 
 const getCommentById = expressAsyncHandler(async (req, res, next) => {

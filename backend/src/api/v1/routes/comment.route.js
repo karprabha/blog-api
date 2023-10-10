@@ -1,5 +1,8 @@
 import { Router } from "express";
 
+import Comment from "../models/comment.js";
+
+import paginate from "../middlewares/pagination.middleware.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import commentValidator from "../validators/comment.validator.js";
 import checkOwnership from "../middlewares/ownership.middleware.js";
@@ -8,7 +11,7 @@ import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/comments", commentController.getAllComments);
+router.get("/comments", paginate(Comment), commentController.getAllComments);
 
 router.get("/comments/:id", commentController.getCommentById);
 
