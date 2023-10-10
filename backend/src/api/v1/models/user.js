@@ -16,19 +16,6 @@ const UserSchema = new Schema({
     },
 });
 
-UserSchema.virtual("name").get(function () {
-    let fullname = "";
-    if (this.first_name && this.family_name) {
-        fullname = `${this.first_name} ${this.family_name}`;
-    }
-
-    return fullname;
-});
-
-UserSchema.virtual("url").get(function () {
-    return `/api/v1/users/${this._id}`;
-});
-
 UserSchema.pre("findOneAndDelete", async function (next) {
     const userId = this.getQuery()._id;
     try {

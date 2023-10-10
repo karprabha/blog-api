@@ -22,10 +22,6 @@ const BlogSchema = new Schema(
     { timestamps: true }
 );
 
-BlogSchema.virtual("url").get(function () {
-    return `/api/v1/blogs/${this._id}`;
-});
-
 BlogSchema.pre("findOneAndDelete", async function (next) {
     try {
         await Comment.deleteMany({ blogPost: this.getQuery()._id });
