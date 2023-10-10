@@ -1,6 +1,9 @@
 import { Router } from "express";
 
+import User from "../models/user.js";
+
 import userValidator from "../validators/user.validator.js";
+import paginate from "../middlewares/pagination.middleware.js";
 import userController from "../controllers/user.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import checkOwnership from "../middlewares/ownership.middleware.js";
@@ -8,7 +11,7 @@ import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
-router.get("/users", userController.getAllUsers);
+router.get("/users", paginate(User), userController.getAllUsers);
 
 router.get("/users/:id", userController.getUserById);
 

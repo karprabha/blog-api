@@ -6,12 +6,16 @@ import Blog from "../models/blog.js";
 import Comment from "../models/comment.js";
 
 const getAllUsers = expressAsyncHandler(async (req, res, next) => {
-    const allUsers = await User.find(
-        {},
-        "first_name family_name username role"
-    ).exec();
+    const users = req.paginatedResults.results;
 
-    res.status(200).json(allUsers);
+    const usersWithoutPasswordAndRole = users.map((user) => {
+        const { password, role, ...userWithoutSensitiveInfo } = user.toObject();
+        return userWithoutSensitiveInfo;
+    });
+
+    req.paginatedResults.results = usersWithoutPasswordAndRole;
+
+    res.status(200).json(req.paginatedResults);
 });
 
 const getUserById = expressAsyncHandler(async (req, res, next) => {
