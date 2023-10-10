@@ -24,6 +24,7 @@ const getAllComments = expressAsyncHandler(async (req, res, next) => {
             comments[i].author = authorMap.get(comments[i].author.toString());
     }
     req.paginatedResults.results = comments;
+
     res.status(200).json(req.paginatedResults);
 });
 
