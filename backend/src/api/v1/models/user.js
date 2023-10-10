@@ -28,6 +28,8 @@ UserSchema.pre("findOneAndDelete", async function (next) {
     }
 });
 
+UserSchema.index({ username: 1 });
+
 const User = model("User", UserSchema);
 
 export default User;

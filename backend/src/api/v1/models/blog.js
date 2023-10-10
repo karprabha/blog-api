@@ -31,6 +31,8 @@ BlogSchema.pre("findOneAndDelete", async function (next) {
     }
 });
 
+BlogSchema.index({ author: 1 });
+
 const Blog = model("Blog", BlogSchema);
 
 export default Blog;

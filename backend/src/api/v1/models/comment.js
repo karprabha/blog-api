@@ -9,6 +9,10 @@ const CommentSchema = new Schema(
     { timestamps: true }
 );
 
+CommentSchema.index({ author: 1 });
+
+CommentSchema.index({ blogPost: 1 });
+
 const Comment = model("Comment", CommentSchema);
 
 export default Comment;
