@@ -1,7 +1,26 @@
+import { Link } from "react-router-dom";
+
+import Footer from "./layouts/Footer";
+import Navbar from "./layouts/Navbar";
+import PageContainer from "./layouts/PageContainer";
+
 const App = () => {
     return (
         <>
-            <h1 className="text-3xl font-bold underline text-center">CMS</h1>
+            <header>
+                <h1>
+                    <Link to={"/"}>Blog CMS</Link>
+                </h1>
+                <Navbar />
+            </header>
+
+            <main>
+                <PageContainer />
+            </main>
+
+            <footer>
+                <Footer />
+            </footer>
         </>
     );
 };
