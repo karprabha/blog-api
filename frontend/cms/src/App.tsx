@@ -1,26 +1,17 @@
-import { Link } from "react-router-dom";
-
-import Footer from "./layouts/Footer";
-import Navbar from "./layouts/Navbar";
+import Header from "./layouts/Header";
 import PageContainer from "./layouts/PageContainer";
+import Footer from "./layouts/Footer";
 
 const App = () => {
     return (
         <>
-            <header>
-                <h1>
-                    <Link to={"/"}>Blog CMS</Link>
-                </h1>
-                <Navbar />
-            </header>
+            <Header />
 
             <main>
                 <PageContainer />
             </main>
 
-            <footer>
-                <Footer />
-            </footer>
+            <Footer />
         </>
     );
 };
