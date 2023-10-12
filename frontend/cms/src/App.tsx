@@ -1,5 +1,5 @@
 import Header from "./layouts/Header";
-import PageContainer from "./layouts/PageContainer";
+import Main from "./layouts/Main";
 import Footer from "./layouts/Footer";
 
 const App = () => {
@@ -7,9 +7,7 @@ const App = () => {
         <>
             <Header />
 
-            <main>
-                <PageContainer />
-            </main>
+            <Main />
 
             <Footer />
         </>

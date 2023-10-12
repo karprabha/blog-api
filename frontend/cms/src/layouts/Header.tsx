@@ -26,10 +26,10 @@ const Header = () => {
                     </li>
                     <li>
                         <NavLink
-                            to={`/logout`}
+                            to={`/login`}
                             className="text-white hover:text-teal-300"
                         >
-                            Logout
+                            Login
                         </NavLink>
                     </li>
                 </ul>
