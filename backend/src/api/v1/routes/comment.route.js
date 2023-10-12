@@ -11,9 +11,20 @@ import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/comments", paginate(Comment), commentController.getAllComments);
+router.get(
+    "/comments",
+    commentValidator.getAllCommentsValidator,
+    queryValidationMiddleware,
+    paginate(Comment),
+    commentController.getAllComments
+);
 
-router.get("/comments/:id", commentController.getCommentById);
+router.get(
+    "/comments/:id",
+    commentValidator.getCommentByIdValidator,
+    queryValidationMiddleware,
+    commentController.getCommentById
+);
 
 router.post(
     "/comments",

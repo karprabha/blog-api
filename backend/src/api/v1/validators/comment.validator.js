@@ -3,6 +3,30 @@ import { body, param } from "express-validator";
 
 import Blog from "../models/blog.js";
 
+const getAllCommentsValidator = [
+    param("blogId").custom(async (value) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+            throw new Error("Blog not found");
+        }
+        const existingBlog = await Blog.findById(value);
+        if (!existingBlog) {
+            throw new Error("Blog not found");
+        }
+    }),
+];
+
+const getCommentByIdValidator = [
+    param("blogId").custom(async (value) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+            throw new Error("Blog not found");
+        }
+        const existingBlog = await Blog.findById(value);
+        if (!existingBlog) {
+            throw new Error("Blog not found");
+        }
+    }),
+];
+
 const createCommentValidator = [
     body("text")
         .notEmpty()
@@ -71,6 +95,8 @@ const deleteCommentValidator = [
 ];
 
 export default {
+    getAllCommentsValidator,
+    getCommentByIdValidator,
     createCommentValidator,
     updateCommentValidator,
     partiallyUpdateCommentValidator,
