@@ -1,22 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const rootUrl = "/";
 
     const handleLogin = async () => {
         try {
             const response = await fetch("/api/v1/auth/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log(data);
+                const { accessToken, refreshToken } = await response.json();
+
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
+
+                navigate(rootUrl);
             } else {
                 alert("Login failed. Please check your credentials.");
             }
