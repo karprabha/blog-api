@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FIRSTNAME_REGEX = /^[A-Z][a-z]{1,23}$/;
 const FAMILYNAME_REGEX = /^[A-Z][a-z]{1,23}$/;
 const USERNAME_REGEX = /^[a-z][a-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const SUCCESS_REDIRECT_URL = "/login";
 
 const Signup = () => {
+    const navigate = useNavigate();
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +32,7 @@ const Signup = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState("");
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
         if (userRef.current) {
@@ -55,19 +58,58 @@ const Signup = () => {
     }, [pwd, matchPwd]);
 
     useEffect(() => {
-        setErrMsg("");
+        setErrorMessages([]);
     }, [firstName, familyName, username, pwd, matchPwd]);
 
-    const handleSignup = async () => {
-        alert("Signup successful!");
+    const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const user = {
+            first_name: firstName,
+            family_name: familyName,
+            username: username,
+            password: pwd,
+        };
+
+        try {
+            const response = await fetch("/api/v1/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            });
+
+            if (response.ok) {
+                navigate(SUCCESS_REDIRECT_URL);
+            } else {
+                const { errors } = await response.json();
+
+                const newErrorMessages = errors.map(
+                    (error: { msg: string }) => error.msg
+                );
+                setErrorMessages(newErrorMessages);
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessages(["An error occurred while signing up."]);
+        }
     };
 
     return (
         <div className="flex my-20 items-center justify-center h-full bg-gray-100">
             <div className="bg-white w-full max-w-sm box-border p-8 rounded-lg shadow-lg">
-                <p ref={errRef} aria-live="assertive">
-                    {errMsg}
-                </p>
+                <div ref={errRef}>
+                    {errorMessages.map((errorMessage, index) => (
+                        <p
+                            key={index}
+                            className="text-red-500 bg-red-100 p-2 rounded mb-4 text-center"
+                            aria-live="assertive"
+                        >
+                            {errorMessage}
+                        </p>
+                    ))}
+                </div>
                 <h2 className="text-2xl text-center mb-4">Signup</h2>
                 <form onSubmit={handleSignup}>
                     <div className="mb-4">
