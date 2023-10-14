@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, cookie } from "express-validator";
 
 const loginValidator = [
     body("username").notEmpty().withMessage("Username is required"),
@@ -6,11 +6,11 @@ const loginValidator = [
 ];
 
 const refreshAccessTokenValidator = [
-    body("refreshToken").notEmpty().withMessage("Refresh token is required"),
+    cookie("refreshToken").notEmpty().withMessage("Refresh token is required"),
 ];
 
 const logoutValidator = [
-    body("refreshToken").notEmpty().withMessage("Refresh token is required"),
+    cookie("refreshToken").notEmpty().withMessage("Refresh token is required"),
 ];
 
 export default {

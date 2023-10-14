@@ -1,9 +1,10 @@
 import expressAsyncHandler from "express-async-handler";
 
+import RefreshToken from "../models/refreshToken.js";
+
 import jwt from "../../../../utils/jwt.util.js";
 import authService from "../services/auth.service.js";
-
-import RefreshToken from "../models/refreshToken.js";
+import cookieOptions from "../../../../config/cookie.config.js";
 
 const login = expressAsyncHandler(async (req, res, next) => {
     const user = await authService.authenticateUser(req.body);
@@ -30,11 +31,13 @@ const login = expressAsyncHandler(async (req, res, next) => {
         await refresh.save();
     }
 
-    return res.json({ accessToken, refreshToken });
+    return res
+        .cookie("refreshToken", refreshToken, cookieOptions)
+        .json({ accessToken });
 });
 
 const logout = async (req, res) => {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
 
     if (!refreshToken) {
         return res.status(400).json({ message: "Refresh token is required." });
@@ -51,7 +54,10 @@ const logout = async (req, res) => {
 
         console.log(`User with ID ${deletedToken.user} logged out.`);
 
-        return res.status(200).json({ message: "Logout successful." });
+        return res
+            .clearCookie("refreshToken", cookieOptions)
+            .status(200)
+            .json({ message: "Logout successful." });
     } catch (error) {
         console.error("Logout error:", error);
 
@@ -60,7 +66,7 @@ const logout = async (req, res) => {
 };
 
 const refreshAccessToken = expressAsyncHandler(async (req, res, next) => {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
 
     if (!refreshToken) {
         return res.status(400).json({ message: "Refresh token is required." });

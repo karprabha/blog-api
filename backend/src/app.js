@@ -3,6 +3,7 @@ import logger from "morgan";
 import express from "express";
 import mongoose from "mongoose";
 import createError from "http-errors";
+import cookieParser from "cookie-parser";
 
 import databaseConfig from "../config/database.config.js";
 import v1Router from "./api/v1/routes/index.route.js";
@@ -25,6 +26,7 @@ app.use(logger(process.env.MORGAN_LOG_FORMAT));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use("/api/v1", v1Router);
 
