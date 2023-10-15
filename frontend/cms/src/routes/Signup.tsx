@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const FIRSTNAME_REGEX = /^[A-Z][a-z]{1,23}$/;
 const FAMILYNAME_REGEX = /^[A-Z][a-z]{1,23}$/;
@@ -89,10 +89,12 @@ const Signup = () => {
                     (error: { msg: string }) => error.msg
                 );
                 setErrorMessages(newErrorMessages);
+                errRef.current?.focus();
             }
         } catch (error) {
             console.error(error);
             setErrorMessages(["An error occurred while signing up."]);
+            errRef.current?.focus();
         }
     };
 
@@ -338,6 +340,15 @@ const Signup = () => {
                         Sign Up
                     </button>
                 </form>
+
+                <p className="mt-4 text-center text-gray-600 text-sm">
+                    Already registered?{" "}
+                    <span className="line">
+                        <Link to={"/login"} className="text-blue-500">
+                            Login
+                        </Link>
+                    </span>
+                </p>
             </div>
         </div>
     );
