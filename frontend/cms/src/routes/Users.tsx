@@ -28,8 +28,6 @@ const Users = () => {
                 });
 
                 const data = await response.json();
-                console.log(data);
-
                 isMounted && setUsers(data.results);
             } catch (err) {
                 console.error(err);
