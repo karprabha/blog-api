@@ -7,10 +7,12 @@ interface AuthContextType {
 
 interface AuthData {
     accessToken: string;
+    username: string;
+    roles: [string];
 }
 
 const initialAuthContextValue: AuthContextType = {
-    auth: { accessToken: "" },
+    auth: { accessToken: "", username: "", roles: [""] },
     setAuth: () => {},
 };
 
@@ -23,7 +25,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [auth, setAuth] = useState<AuthData>({ accessToken: "" });
+    const [auth, setAuth] = useState<AuthData>(initialAuthContextValue.auth);
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

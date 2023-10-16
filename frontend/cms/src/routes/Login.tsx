@@ -1,14 +1,15 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
-
-const ROOT_URL = "/";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const { setAuth } = useAuth();
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -37,8 +38,10 @@ const Login = () => {
             if (response.ok) {
                 const { accessToken } = await response.json();
 
-                setAuth({ accessToken });
-                navigate(ROOT_URL);
+                setAuth({ accessToken, username, roles: ["admin"] });
+                setUsername("");
+                setPassword("");
+                navigate(from, { replace: true });
             } else {
                 const { errors, message } = await response.json();
 
