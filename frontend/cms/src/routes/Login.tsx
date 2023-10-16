@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
 
 const ROOT_URL = "/";
 
 const Login = () => {
+    const { setAuth } = useContext(AuthContext);
     const navigate = useNavigate();
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
@@ -33,11 +35,9 @@ const Login = () => {
             });
 
             if (response.ok) {
-                const { accessToken, refreshToken } = await response.json();
+                const { accessToken } = await response.json();
 
-                localStorage.setItem("accessToken", accessToken);
-                localStorage.setItem("refreshToken", refreshToken);
-
+                setAuth({ accessToken });
                 navigate(ROOT_URL);
             } else {
                 const { errors, message } = await response.json();
