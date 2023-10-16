@@ -5,9 +5,7 @@ const Header = () => {
     const logout = useLogout();
 
     const handleLogout = async () => {
-        console.log("before");
         await logout();
-        console.log("after");
     };
 
     return (
