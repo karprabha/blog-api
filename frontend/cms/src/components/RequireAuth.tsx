@@ -8,7 +8,6 @@ interface RequireAuthProps {
 const RequireAuth: React.FC<RequireAuthProps> = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    console.log(auth, allowedRoles);
 
     return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
         <Outlet />

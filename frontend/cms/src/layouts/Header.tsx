@@ -48,6 +48,14 @@ const Header = () => {
                             Create Post
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            to={`/users`}
+                            className="text-white hover:text-teal-300"
+                        >
+                            Users
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>

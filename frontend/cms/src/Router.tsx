@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import Home from "./routes/Home.tsx";
+import Users from "./routes/Users.tsx";
 import Login from "./routes/Login.tsx";
 import Signup from "./routes/Signup.tsx";
 import Profile from "./routes/Profile.tsx";
@@ -37,6 +38,10 @@ const Router = () => {
                 {
                     path: "/unauthorized",
                     element: <Unauthorized />,
+                },
+                {
+                    path: "/users",
+                    element: <Users />,
                 },
                 {
                     path: "/create-post",
