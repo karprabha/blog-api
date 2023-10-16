@@ -9,6 +9,7 @@ import ErrorPage from "./routes/ErrorPage.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
 import CreateBlogPost from "./routes/CreateBlogPost.tsx";
 import Unauthorized from "./routes/UnauthorizedPage.tsx";
+import PersistLogin from "./components/PersistLogin.tsx";
 
 const ROLES = {
     User: "user",
@@ -23,10 +24,6 @@ const Router = () => {
             errorElement: <ErrorPage />,
             children: [
                 { index: true, element: <Home /> },
-                {
-                    path: "/profile",
-                    element: <Profile />,
-                },
                 {
                     path: "/login",
                     element: <Login />,
@@ -44,9 +41,22 @@ const Router = () => {
                     element: <Users />,
                 },
                 {
-                    path: "/create-post",
-                    element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
-                    children: [{ index: true, element: <CreateBlogPost /> }],
+                    element: <PersistLogin />,
+                    children: [
+                        {
+                            path: "/profile",
+                            element: <Profile />,
+                        },
+                        {
+                            path: "/create-post",
+                            element: (
+                                <RequireAuth allowedRoles={[ROLES.Admin]} />
+                            ),
+                            children: [
+                                { index: true, element: <CreateBlogPost /> },
+                            ],
+                        },
+                    ],
                 },
             ],
         },

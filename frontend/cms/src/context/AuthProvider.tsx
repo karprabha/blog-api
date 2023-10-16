@@ -3,6 +3,8 @@ import { ReactNode, createContext, useState } from "react";
 interface AuthContextType {
     auth: AuthData;
     setAuth: React.Dispatch<React.SetStateAction<AuthData>>;
+    persist: boolean;
+    setPersist: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AuthData {
@@ -14,6 +16,8 @@ interface AuthData {
 const initialAuthContextValue: AuthContextType = {
     auth: { accessToken: "", username: "", roles: [""] },
     setAuth: () => {},
+    persist: false,
+    setPersist: () => {},
 };
 
 export const AuthContext = createContext<AuthContextType>(
@@ -27,8 +31,13 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [auth, setAuth] = useState<AuthData>(initialAuthContextValue.auth);
 
+    const storedPersist = localStorage.getItem("persist");
+    const [persist, setPersist] = useState(
+        storedPersist ? JSON.parse(storedPersist) : false
+    );
+
     return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>
             {children}
         </AuthContext.Provider>
     );

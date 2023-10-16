@@ -17,6 +17,7 @@ const useRefreshToken = () => {
             const data = await response.json();
             setAuth((prev) => ({
                 ...prev,
+                roles: ["admin"],
                 accessToken: data.accessToken,
             }));
 

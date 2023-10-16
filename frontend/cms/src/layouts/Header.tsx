@@ -1,6 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
 
 const Header = () => {
+    const logout = useLogout();
+
+    const handleLogout = async () => {
+        console.log("before");
+        await logout();
+        console.log("after");
+    };
+
     return (
         <header className="bg-teal-600 p-2 flex justify-between items-center">
             <h1 className="text-2xl text-white">
@@ -54,6 +63,15 @@ const Header = () => {
                             className="text-white hover:text-teal-300"
                         >
                             Users
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to={`/`}
+                            className="text-white hover:text-teal-300"
+                            onClick={handleLogout}
+                        >
+                            Logout
                         </NavLink>
                     </li>
                 </ul>

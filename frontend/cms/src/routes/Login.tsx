@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
 
@@ -59,6 +59,14 @@ const Login = () => {
             errRef.current?.focus();
         }
     };
+
+    const togglePersist = () => {
+        setPersist((prev) => !prev);
+    };
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist.toString());
+    }, [persist]);
 
     return (
         <div className="flex my-20 items-center justify-center h-full bg-gray-100">
@@ -118,6 +126,18 @@ const Login = () => {
                     >
                         Login
                     </button>
+                    <div className="mb-4 mt-2">
+                        <input
+                            type="checkbox"
+                            id="persist"
+                            onChange={togglePersist}
+                            checked={persist}
+                            className="rounded text-blue-500 cursor-pointer focus:ring-2 focus:ring-blue-500"
+                        />
+                        <label htmlFor="persist" className="ml-2 text-gray-700">
+                            Trust This Device
+                        </label>
+                    </div>
                 </form>
                 <p className="mt-4 text-center text-gray-600 text-sm">
                     Need an Account?{" "}
