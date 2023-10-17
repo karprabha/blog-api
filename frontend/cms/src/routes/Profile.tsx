@@ -1,5 +1,5 @@
 import useFetch from "../hooks/useFetch";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useFailedAuth from "../hooks/useFailedAuth";
 import { useState, useEffect, useRef } from "react";
 import jwt_decode from "jwt-decode";
@@ -125,7 +125,9 @@ const Profile = () => {
                                 </h3>
                                 <ul>
                                     {user.blogs.map((blog) => (
-                                        <li key={blog._id}>{blog.title}</li>
+                                        <Link to={`/blogs/${blog._id}`}>
+                                            <li key={blog._id}>{blog.title}</li>
+                                        </Link>
                                     ))}
                                 </ul>
                             </div>

@@ -5,6 +5,7 @@ import Users from "./routes/Users.tsx";
 import Login from "./routes/Login.tsx";
 import Signup from "./routes/Signup.tsx";
 import Profile from "./routes/Profile.tsx";
+import BlogPost from "./routes/BlogPost.tsx";
 import ErrorPage from "./routes/ErrorPage.tsx";
 import AllowUnauth from "./components/AllowUnauth.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
@@ -47,6 +48,10 @@ const Router = () => {
                         {
                             path: "/users",
                             element: <Users />,
+                        },
+                        {
+                            path: "/blogs/:id",
+                            element: <BlogPost />,
                         },
                         {
                             path: "/create-post",
