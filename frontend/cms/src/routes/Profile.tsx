@@ -1,7 +1,154 @@
+import useFetch from "../hooks/useFetch";
+import { useLocation } from "react-router-dom";
+import useFailedAuth from "../hooks/useFailedAuth";
+import { useState, useEffect, useRef } from "react";
+import jwt_decode from "jwt-decode";
+import useAuth from "../hooks/useAuth";
+
+interface User {
+    _id: string;
+    first_name: string;
+    family_name: string;
+    username: string;
+    role: string;
+}
+
+interface Blog {
+    _id: string;
+    title: string;
+}
+
+interface Comment {
+    _id: string;
+    blogPost: {
+        _id: string;
+        title: string;
+    };
+    text: string;
+}
+
+interface UserProfileData {
+    user: User;
+    blogs: Blog[];
+    recentComments: Comment[];
+}
+
+interface JwtPayload {
+    user_id: string;
+    iat: number;
+    exp: number;
+}
+
 const Profile = () => {
+    const fetch = useFetch();
+    const { auth } = useAuth();
+    const failedAuth = useFailedAuth();
+
+    const effectRun = useRef(false);
+    const location = useLocation();
+    const [user, setUser] = useState<UserProfileData | null>(null);
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const decoded: JwtPayload = jwt_decode(auth.accessToken);
+
+        const { user_id } = decoded;
+
+        const getUser = async () => {
+            try {
+                const response = await fetch(`/api/v1/users/${user_id}`, {
+                    method: "GET",
+                    signal: controller.signal,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    isMounted && setUser(data);
+                } else if (response.status === 401) {
+                    failedAuth(location);
+                }
+            } catch (err) {
+                console.error(err);
+
+                failedAuth(location);
+            }
+        };
+
+        if (effectRun.current) {
+            getUser();
+        }
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+            effectRun.current = true;
+        };
+    }, []);
+
     return (
         <>
-            <h1>Profile</h1>
+            <div className="bg-white shadow-md rounded-lg p-6">
+                {user && (
+                    <div>
+                        <div className="text-center mb-4">
+                            <h2 className="text-2xl font-semibold">
+                                {user.user.username}
+                            </h2>
+                            <p className="text-gray-500 text-sm">
+                                {user.user.role}
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">
+                                    Profile Information
+                                </h3>
+                                <p>
+                                    <strong>First Name:</strong>{" "}
+                                    {user.user.first_name}
+                                </p>
+                                <p>
+                                    <strong>Family Name:</strong>{" "}
+                                    {user.user.family_name}
+                                </p>
+                                <p>
+                                    <strong>Username:</strong>{" "}
+                                    {user.user.username}
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">
+                                    Blogs
+                                </h3>
+                                <ul>
+                                    {user.blogs.map((blog) => (
+                                        <li key={blog._id}>{blog.title}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2">
+                                Recent Comments
+                            </h3>
+                            <ul>
+                                {user.recentComments.map((comment) => (
+                                    <li key={comment._id}>
+                                        <p>
+                                            <strong>Comment on:</strong>{" "}
+                                            {comment.blogPost.title}
+                                        </p>
+                                        <p>{comment.text}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
+            </div>
         </>
     );
 };
