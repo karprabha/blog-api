@@ -5,7 +5,7 @@ const Main = () => {
         <>
             <main className="h-full bg-gray-100">
                 <div className="max-w-7xl m-auto">
-                    <Outlet />;
+                    <Outlet />
                 </div>
             </main>
         </>
