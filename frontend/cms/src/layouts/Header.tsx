@@ -30,14 +30,6 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <NavLink
-                                        to="/users"
-                                        className="text-white hover:text-teal-300"
-                                    >
-                                        Users
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
                                         to="/profile"
                                         className="text-white hover:text-teal-300"
                                     >
