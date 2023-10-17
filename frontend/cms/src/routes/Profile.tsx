@@ -90,65 +90,77 @@ const Profile = () => {
 
     return (
         <>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                {user && (
-                    <div>
-                        <div className="text-center mb-4">
-                            <h2 className="text-2xl font-semibold">
-                                {user.user.username}
-                            </h2>
-                            <p className="text-gray-500 text-sm">
-                                {user.user.role}
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white mt-10 shadow-md rounded-lg p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4">
+                        {user && (
+                            <div className="text-center">
+                                <h2 className="text-2xl font-semibold mb-2">
+                                    User Profile
+                                </h2>
+                                <p className="text-gray-500 text-sm mb-2">
+                                    <strong>Username:</strong>{" "}
+                                    {user.user.username}
+                                </p>
+                                <p className="text-gray-500 text-sm">
+                                    <strong>Role:</strong> {user.user.role}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="p-4">
+                        {user && (
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">
                                     Profile Information
                                 </h3>
-                                <p>
+                                <p className="text-gray-500 text-sm mb-2">
                                     <strong>First Name:</strong>{" "}
                                     {user.user.first_name}
                                 </p>
-                                <p>
+                                <p className="text-gray-500 text-sm mb-2">
                                     <strong>Family Name:</strong>{" "}
                                     {user.user.family_name}
                                 </p>
-                                <p>
+                                <p className="text-gray-500 text-sm">
                                     <strong>Username:</strong>{" "}
                                     {user.user.username}
                                 </p>
                             </div>
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2">
-                                    Blogs
-                                </h3>
-                                <ul>
-                                    {user.blogs.map((blog) => (
-                                        <Link to={`/blogs/${blog._id}`}>
-                                            <li key={blog._id}>{blog.title}</li>
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2">
-                                Recent Comments
-                            </h3>
-                            <ul>
-                                {user.recentComments.map((comment) => (
-                                    <li key={comment._id}>
-                                        <p>
-                                            <strong>Comment on:</strong>{" "}
-                                            {comment.blogPost.title}
-                                        </p>
-                                        <p>{comment.text}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        )}
                     </div>
+                </div>
+            </div>
+
+            <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+                <h2 className="text-2xl font-semibold mb-2">Blogs</h2>
+                {user && (
+                    <ul>
+                        {user.blogs.map((blog) => (
+                            <li>
+                                <Link to={`/blogs/${blog._id}`} key={blog._id}>
+                                    {blog.title}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+                <h2 className="text-2xl font-semibold mb-2">Recent Comments</h2>
+                {user && (
+                    <ul>
+                        {user.recentComments.map((comment) => (
+                            <li key={comment._id}>
+                                <p>
+                                    <strong>Comment on:</strong>{" "}
+                                    {comment.blogPost.title}
+                                </p>
+                                <p>{comment.text}</p>
+                            </li>
+                        ))}
+                    </ul>
                 )}
             </div>
         </>
