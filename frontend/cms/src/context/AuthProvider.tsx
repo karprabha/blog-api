@@ -10,11 +10,10 @@ interface AuthContextType {
 interface AuthData {
     accessToken: string;
     username: string;
-    roles: [string];
 }
 
 const initialAuthContextValue: AuthContextType = {
-    auth: { accessToken: "", username: "", roles: [""] },
+    auth: { accessToken: "", username: "" },
     setAuth: () => {},
     persist: false,
     setPersist: () => {},

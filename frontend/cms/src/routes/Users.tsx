@@ -1,6 +1,7 @@
 import useFetch from "../hooks/useFetch";
+import { useLocation } from "react-router-dom";
+import useFailedAuth from "../hooks/useFailedAuth";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 
 interface User {
     _id: number;
@@ -11,8 +12,9 @@ interface User {
 
 const Users = () => {
     const fetch = useFetch();
+    const failedAuth = useFailedAuth();
+
     const effectRun = useRef(false);
-    const navigate = useNavigate();
     const location = useLocation();
     const [users, setUsers] = useState<User[] | null>(null);
 
@@ -27,15 +29,16 @@ const Users = () => {
                     signal: controller.signal,
                 });
 
+                if (response.status === 401) {
+                    failedAuth(location);
+                }
+
                 const data = await response.json();
                 isMounted && setUsers(data.results);
             } catch (err) {
                 console.error(err);
 
-                navigate("/login", {
-                    state: { from: location },
-                    replace: true,
-                });
+                failedAuth(location);
             }
         };
 

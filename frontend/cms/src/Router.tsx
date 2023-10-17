@@ -6,15 +6,11 @@ import Login from "./routes/Login.tsx";
 import Signup from "./routes/Signup.tsx";
 import Profile from "./routes/Profile.tsx";
 import ErrorPage from "./routes/ErrorPage.tsx";
+import AllowUnauth from "./components/AllowUnauth.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
 import CreateBlogPost from "./routes/CreateBlogPost.tsx";
 import Unauthorized from "./routes/UnauthorizedPage.tsx";
 import PersistLogin from "./components/PersistLogin.tsx";
-
-const ROLES = {
-    User: "user",
-    Admin: "admin",
-};
 
 const Router = () => {
     const router = createBrowserRouter([
@@ -25,33 +21,36 @@ const Router = () => {
             children: [
                 { index: true, element: <Home /> },
                 {
-                    path: "/login",
-                    element: <Login />,
-                },
-                {
-                    path: "/signup",
-                    element: <Signup />,
-                },
-                {
                     path: "/unauthorized",
                     element: <Unauthorized />,
-                },
-                {
-                    path: "/users",
-                    element: <Users />,
                 },
                 {
                     element: <PersistLogin />,
                     children: [
                         {
+                            element: <AllowUnauth />,
+                            children: [
+                                {
+                                    path: "/login",
+                                    element: <Login />,
+                                },
+                                {
+                                    path: "/signup",
+                                    element: <Signup />,
+                                },
+                            ],
+                        },
+                        {
                             path: "/profile",
                             element: <Profile />,
                         },
                         {
+                            path: "/users",
+                            element: <Users />,
+                        },
+                        {
                             path: "/create-post",
-                            element: (
-                                <RequireAuth allowedRoles={[ROLES.Admin]} />
-                            ),
+                            element: <RequireAuth />,
                             children: [
                                 { index: true, element: <CreateBlogPost /> },
                             ],

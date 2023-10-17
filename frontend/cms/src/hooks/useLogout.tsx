@@ -4,7 +4,7 @@ const useLogout = () => {
     const { setAuth } = useAuth();
 
     const logout = async () => {
-        setAuth({});
+        setAuth({ username: "", accessToken: "" });
         try {
             const response = await fetch("/api/v1/auth/logout", {
                 method: "POST",

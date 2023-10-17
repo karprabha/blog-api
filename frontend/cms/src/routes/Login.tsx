@@ -38,7 +38,7 @@ const Login = () => {
             if (response.ok) {
                 const { accessToken } = await response.json();
 
-                setAuth({ accessToken, username, roles: ["admin"] });
+                setAuth({ accessToken, username });
                 setUsername("");
                 setPassword("");
                 navigate(from, { replace: true });
