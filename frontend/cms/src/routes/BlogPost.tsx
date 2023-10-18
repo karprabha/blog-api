@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
 import ReactMarkdown from "react-markdown";
+import CodeBlock from "../components/CodeBlock";
 
 type BlogPostType = {
     _id: string;
@@ -79,7 +80,9 @@ const BlogPost = () => {
                 By {blog.author.first_name} {blog.author.family_name} (@
                 {blog.author.username})
             </p>
-            <ReactMarkdown>{blog.content}</ReactMarkdown>
+            <ReactMarkdown components={{ code: CodeBlock }}>
+                {blog.content}
+            </ReactMarkdown>
         </div>
     );
 };
