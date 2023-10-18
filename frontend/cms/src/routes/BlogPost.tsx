@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "../components/CodeBlock";
+import remarkGfm from "remark-gfm";
 
 type BlogPostType = {
     _id: string;
@@ -80,7 +81,12 @@ const BlogPost = () => {
                 By {blog.author.first_name} {blog.author.family_name} (@
                 {blog.author.username})
             </p>
-            <ReactMarkdown components={{ code: CodeBlock }}>
+
+            <ReactMarkdown
+                className="prose prose-pre:p-0"
+                components={{ code: CodeBlock }}
+                remarkPlugins={[remarkGfm]}
+            >
                 {blog.content}
             </ReactMarkdown>
         </div>
