@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
+import ReactMarkdown from "react-markdown";
 
 type BlogPostType = {
     _id: string;
@@ -72,13 +73,13 @@ const BlogPost = () => {
     }
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-6 m-4">
+        <div className="bg-white rounded-lg shadow-lg p-6 my-4">
             <h2 className="text-2xl font-semibold">{blog.title}</h2>
             <p className="text-gray-500 mb-4">
                 By {blog.author.first_name} {blog.author.family_name} (@
                 {blog.author.username})
             </p>
-            <p className="text-gray-700">{blog.content}</p>
+            <ReactMarkdown>{blog.content}</ReactMarkdown>
         </div>
     );
 };
