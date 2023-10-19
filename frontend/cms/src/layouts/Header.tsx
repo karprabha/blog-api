@@ -11,9 +11,9 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-teal-600">
+        <header className="bg-cyan-600">
             <div className="max-w-7xl m-auto py-2 flex justify-between items-center">
-                <h1 className="text-2xl text-white">
+                <h1 className="text-2xl text-white font-semibold">
                     <Link to={"/"}>Blog CMS</Link>
                 </h1>
                 <nav>
@@ -23,7 +23,7 @@ const Header = () => {
                                 <li>
                                     <NavLink
                                         to="/create-post"
-                                        className="text-white hover:text-teal-300"
+                                        className="text-white hover:text-yellow-400"
                                     >
                                         Create Post
                                     </NavLink>
@@ -31,7 +31,7 @@ const Header = () => {
                                 <li>
                                     <NavLink
                                         to="/profile"
-                                        className="text-white hover:text-teal-300"
+                                        className="text-white hover:text-yellow-400"
                                     >
                                         Profile
                                     </NavLink>
@@ -39,7 +39,7 @@ const Header = () => {
                                 <li>
                                     <NavLink
                                         to="/"
-                                        className="text-white hover:text-teal-300"
+                                        className="text-white hover:text-yellow-400"
                                         onClick={handleLogout}
                                     >
                                         Logout
@@ -51,7 +51,7 @@ const Header = () => {
                                 <li>
                                     <NavLink
                                         to="/login"
-                                        className="text-white hover:text-teal-300"
+                                        className="text-white hover:text-yellow-400"
                                     >
                                         Login
                                     </NavLink>
@@ -59,7 +59,7 @@ const Header = () => {
                                 <li>
                                     <NavLink
                                         to="/signup"
-                                        className="text-white hover:text-teal-300"
+                                        className="text-white hover:text-yellow-400"
                                     >
                                         Signup
                                     </NavLink>

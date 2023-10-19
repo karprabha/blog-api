@@ -147,7 +147,7 @@ const Profile = () => {
                 )}
             </div>
 
-            <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+            <div className="bg-white mb-10 shadow-md rounded-lg p-6 mt-4">
                 <h2 className="text-2xl font-semibold mb-2">Recent Comments</h2>
                 {user && (
                     <ul>

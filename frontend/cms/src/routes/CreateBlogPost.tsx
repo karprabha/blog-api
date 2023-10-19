@@ -110,7 +110,7 @@ const CreateBlogPost = () => {
                             id="content"
                             required
                             className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none"
-                            placeholder="Content"
+                            placeholder="Content in Markdown"
                             rows={16}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
