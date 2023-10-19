@@ -83,7 +83,7 @@ const BlogPost = () => {
             </p>
 
             <ReactMarkdown
-                className="prose prose-pre:p-0"
+                className="mb-10 prose prose-pre:p-0"
                 components={{ code: CodeBlock }}
                 remarkPlugins={[remarkGfm]}
             >

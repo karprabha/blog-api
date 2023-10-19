@@ -4,7 +4,18 @@ import tailwindTypography from "@tailwindcss/typography";
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
-        extend: {},
+        extend: {
+            typography: {
+                DEFAULT: {
+                    css: {
+                        maxWidth: "100ch",
+                        marginInline: "auto",
+                        color: "#111111",
+                        overflowWrap: "anywhere",
+                    },
+                },
+            },
+        },
     },
     plugins: [tailwindTypography],
 };
