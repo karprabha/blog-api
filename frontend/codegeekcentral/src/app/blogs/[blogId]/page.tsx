@@ -29,7 +29,6 @@ export async function getStaticPaths() {
 const BlogPost = async ({ params }) => {
     const { GetBlogData } = blogs();
     const blog: BlogPostType = await GetBlogData(params.blogId);
-    console.log(blog);
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-6 my-10">
