@@ -14,7 +14,7 @@ const Header = () => {
         <header className="bg-cyan-600">
             <div className="max-w-7xl m-auto py-2 flex justify-between items-center">
                 <h1 className="text-2xl text-white font-semibold">
-                    <Link to={"/"}>Blog CMS</Link>
+                    <Link to={"/"}>CodeGeekCentral CMS</Link>
                 </h1>
                 <nav>
                     <ul className="flex space-x-4">
