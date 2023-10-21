@@ -6,6 +6,9 @@ import useFailedAuth from "../../hooks/useFailedAuth";
 import { useState, useEffect, useRef } from "react";
 import jwt_decode from "jwt-decode";
 import useAuth from "../../hooks/useAuth";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
+import CodeBlock from "../components/CodeBlock";
 
 interface User {
     _id: string;
@@ -159,9 +162,19 @@ const Profile = () => {
                             <li key={comment._id}>
                                 <p>
                                     <strong>Comment on:</strong>{" "}
-                                    {comment.blogPost.title}
+                                    <Link
+                                        href={`/blogs/${comment.blogPost._id}`}
+                                    >
+                                        {comment.blogPost.title}
+                                    </Link>
                                 </p>
-                                <p>{comment.text}</p>
+                                <ReactMarkdown
+                                    className="text-gray-700 mt-2"
+                                    components={{ code: CodeBlock }}
+                                    remarkPlugins={[remarkGfm]}
+                                >
+                                    {comment.text}
+                                </ReactMarkdown>
                             </li>
                         ))}
                     </ul>
