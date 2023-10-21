@@ -16,6 +16,8 @@ const CreateBlogPost = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [published, setPublished] = useState(false);
+    const [coverImageURL, setCoverImageURL] = useState("");
+    const [coverImageCredit, setCoverImageCredit] = useState("");
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
@@ -35,7 +37,13 @@ const CreateBlogPost = () => {
             const response = await fetch("/api/v1/blogs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, content, published }),
+                body: JSON.stringify({
+                    title,
+                    content,
+                    published,
+                    coverImageURL,
+                    coverImageCredit,
+                }),
             });
 
             if (response.ok) {
@@ -43,6 +51,8 @@ const CreateBlogPost = () => {
                 console.log(data);
                 setTitle("");
                 setContent("");
+                setCoverImageURL("");
+                setCoverImageCredit("");
                 navigate("/");
             } else if (response.status === 401) {
                 failedAuth(location);
@@ -97,6 +107,40 @@ const CreateBlogPost = () => {
                             placeholder="Title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label
+                            htmlFor="coverImageURL"
+                            className="block text-gray-600 text-sm font-medium mb-2"
+                        >
+                            Cover Image URL
+                        </label>
+                        <input
+                            type="text"
+                            id="coverImageURL"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none"
+                            placeholder="Cover Image URL"
+                            value={coverImageURL}
+                            onChange={(e) => setCoverImageURL(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label
+                            htmlFor="coverImageCredit"
+                            className="block text-gray-600 text-sm font-medium mb-2"
+                        >
+                            Cover Image Credit
+                        </label>
+                        <input
+                            type="text"
+                            id="coverImageCredit"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none"
+                            placeholder="Cover Image Credit"
+                            value={coverImageCredit}
+                            onChange={(e) =>
+                                setCoverImageCredit(e.target.value)
+                            }
                         />
                     </div>
                     <div className="mb-6">
