@@ -140,8 +140,8 @@ const Profile = () => {
                 {user && (
                     <ul>
                         {user.blogs.map((blog) => (
-                            <li>
-                                <Link to={`/blogs/${blog._id}`} key={blog._id}>
+                            <li key={blog._id}>
+                                <Link to={`/blogs/${blog._id}`}>
                                     {blog.title}
                                 </Link>
                             </li>
