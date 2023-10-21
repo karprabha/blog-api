@@ -7,7 +7,7 @@ interface Blog {
     createdAt: string;
 }
 
-const blogs = () => {
+const Blogs = () => {
     const GetAllBlogIds = async () => {
         let blogList: Blog[] = [];
 
@@ -85,4 +85,4 @@ const blogs = () => {
     return { GetAllBlogIds, GetAllBlogs, GetBlogData };
 };
 
-export default blogs;
+export default Blogs;

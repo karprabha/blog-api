@@ -33,7 +33,7 @@ const Home = async () => {
                         components={{ code: CodeBlock }}
                         remarkPlugins={[remarkGfm]}
                     >
-                        {blog.content.slice(0, 100)}
+                        {blog.content.slice(0, 100) + "..."}
                     </ReactMarkdown>
                 </div>
             ))}
