@@ -16,12 +16,15 @@ const Home = async () => {
                     key={blog._id}
                     className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg"
                 >
-                    <Link href={`/blogs/${blog._id}`}>
-                        <span className="text-lg font-semibold text-blue-500 hover:underline">
-                            {blog.title}
-                        </span>
+                    <Link
+                        href={`/blogs/${blog._id}`}
+                        className="hover:underline"
+                    >
+                        <ReactMarkdown className="mb-2 prose prose-pre:p-0">
+                            {"# " + blog.title}
+                        </ReactMarkdown>
                     </Link>
-                    <p className="text-gray-600 mt-2">
+                    <p className="prose text-right text-gray-600 mb-4">
                         {format(new Date(blog.createdAt), "MMMM d, yyyy")}
                     </p>
 

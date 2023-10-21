@@ -13,6 +13,7 @@ type BlogPostType = {
     };
     title: string;
     content: string;
+    createdAt: string;
 };
 
 export async function getStaticPaths() {
@@ -28,11 +29,15 @@ export async function getStaticPaths() {
 const BlogPost = async ({ params }) => {
     const { GetBlogData } = blogs();
     const blog: BlogPostType = await GetBlogData(params.blogId);
+    console.log(blog);
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-6 my-10">
-            <h2 className="text-2xl font-semibold">{blog.title}</h2>
-            <p className="text-gray-500 mb-4">
+            <ReactMarkdown className="mb-2 prose prose-pre:p-0">
+                {"# " + blog.title}
+            </ReactMarkdown>
+
+            <p className="prose text-gray-500 text-right mb-4">
                 By {blog.author.first_name} {blog.author.family_name} (@
                 {blog.author.username})
             </p>
