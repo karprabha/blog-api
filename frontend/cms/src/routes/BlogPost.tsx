@@ -18,6 +18,8 @@ type BlogPostType = {
     title: string;
     content: string;
     published: boolean;
+    cover_image_url: string;
+    cover_image_credit: string;
 };
 
 const BlogPost = () => {
@@ -119,6 +121,7 @@ const BlogPost = () => {
     const cancelDelete = () => {
         setShowDeleteModal(false);
     };
+
     if (loading) {
         return <div className="text-center">Loading...</div>;
     }
@@ -143,7 +146,7 @@ const BlogPost = () => {
                     </button>
 
                     <Link
-                        to={`/edit/${params.id}`}
+                        to={`/blogs/${params.id}/edit`}
                         className="mr-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
                     >
                         Edit

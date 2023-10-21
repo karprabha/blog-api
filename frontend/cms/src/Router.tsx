@@ -6,6 +6,7 @@ import Signup from "./routes/Signup.tsx";
 import Profile from "./routes/Profile.tsx";
 import BlogPost from "./routes/BlogPost.tsx";
 import ErrorPage from "./routes/ErrorPage.tsx";
+import EditBlogPost from "./routes/EditBlogPost.tsx";
 import AllowUnauth from "./components/AllowUnauth.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
 import CreateBlogPost from "./routes/CreateBlogPost.tsx";
@@ -47,6 +48,13 @@ const Router = () => {
                         {
                             path: "/blogs/:id",
                             element: <BlogPost />,
+                        },
+                        {
+                            path: "/blogs/:id/edit",
+                            element: <RequireAuth />,
+                            children: [
+                                { index: true, element: <EditBlogPost /> },
+                            ],
                         },
                         {
                             path: "/create-post",
