@@ -1,6 +1,6 @@
+import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "../../components/CodeBlock";
-import remarkGfm from "remark-gfm";
 import blogs from "@/lib/blogs";
 import CommentSection from "../components/CommentSection";
 
