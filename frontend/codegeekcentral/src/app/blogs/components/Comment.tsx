@@ -92,7 +92,7 @@ const Comment: React.FC<CommentProps> = ({
                     </p>
 
                     <ReactMarkdown
-                        className="text-gray-700 mt-2 prose prose-pre:p-0"
+                        className="text-gray-700 mt-2"
                         components={{ code: CodeBlock }}
                         remarkPlugins={[remarkGfm]}
                     >

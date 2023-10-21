@@ -5,10 +5,13 @@ const useRefreshToken = () => {
 
     const refresh = async () => {
         try {
-            const response = await fetch("/api/v1/auth/refresh", {
-                method: "POST",
-                credentials: "include",
-            });
+            const response = await fetch(
+                "http://localhost:3000/api/v1/auth/refresh",
+                {
+                    method: "POST",
+                    credentials: "include",
+                }
+            );
 
             if (!response.ok) {
                 throw new Error("Token refresh failed");
