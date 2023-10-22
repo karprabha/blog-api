@@ -14,7 +14,11 @@ const router = Router();
 
 router.use("/blogs/:blogId", commentRouter);
 
-router.get("/blogs", paginate(Blog), blogController.getAllBlogPosts);
+router.get(
+    "/blogs",
+    paginate(Blog, (query) => query.where({ published: true })),
+    blogController.getAllBlogPosts
+);
 
 router.get("/blogs/:id", blogController.getBlogPostById);
 
