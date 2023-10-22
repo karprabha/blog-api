@@ -7,12 +7,13 @@ import blogValidator from "../validators/blog.validator.js";
 import paginate from "../middlewares/pagination.middleware.js";
 import blogController from "../controllers/blog.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
+import accessMiddleware from "../middlewares/access.middleware.js";
 import checkOwnership from "../middlewares/ownership.middleware.js";
 import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
-router.use("/blogs/:blogId", commentRouter);
+router.use("/blogs/:blogId", accessMiddleware.checkBlogAccess, commentRouter);
 
 router.get(
     "/blogs",
