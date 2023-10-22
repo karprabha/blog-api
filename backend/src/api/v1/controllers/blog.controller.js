@@ -26,7 +26,8 @@ const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const createBlogPost = expressAsyncHandler(async (req, res, next) => {
-    const { title, content, published } = req.body;
+    const { title, content, published, cover_image_url, cover_image_credit } =
+        req.body;
     const author = req.user.id;
 
     const createdBlog = await Blog.create({
@@ -34,13 +35,16 @@ const createBlogPost = expressAsyncHandler(async (req, res, next) => {
         title,
         content,
         published,
+        cover_image_url,
+        cover_image_credit,
     });
 
     return res.status(201).json(createdBlog);
 });
 
 const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
-    const { title, content, published } = req.body;
+    const { title, content, published, cover_image_url, cover_image_credit } =
+        req.body;
     const author = req.user.id;
 
     const blogData = {
@@ -48,6 +52,8 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
         title,
         content,
         published,
+        cover_image_url,
+        cover_image_credit,
     };
 
     const updatedBlogPost = await Blog.findByIdAndUpdate(
@@ -65,7 +71,13 @@ const updateBlogPostById = expressAsyncHandler(async (req, res, next) => {
 
 const partiallyUpdateBlogPostById = expressAsyncHandler(
     async (req, res, next) => {
-        const { title, content, published } = req.body;
+        const {
+            title,
+            content,
+            published,
+            cover_image_url,
+            cover_image_credit,
+        } = req.body;
         const author = req.user.id;
 
         const blogData = {
@@ -73,6 +85,8 @@ const partiallyUpdateBlogPostById = expressAsyncHandler(
             ...(title !== undefined && { title }),
             ...(content !== undefined && { content }),
             ...(published !== undefined && { published }),
+            ...(cover_image_url !== undefined && { cover_image_url }),
+            ...(cover_image_credit !== undefined && { cover_image_credit }),
         };
 
         const partiallyUpdatedBlogPost = await Blog.findByIdAndUpdate(

@@ -12,6 +12,16 @@ const createBlogPostValidator = [
         .isLength({ min: 1, max: 30000 })
         .withMessage("Content must be between 1 and 30000 characters"),
     body("published").isBoolean().withMessage("Published must be a boolean"),
+    body("cover_image_url")
+        .notEmpty()
+        .withMessage("Cover image URL is required")
+        .isLength({ min: 1, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
+    body("cover_image_credit")
+        .notEmpty()
+        .withMessage("Cover image credit is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Cover image credit must be between 1 and 100 characters"),
 ];
 
 const updateBlogPostValidator = [
@@ -27,6 +37,16 @@ const updateBlogPostValidator = [
         .isLength({ min: 1, max: 30000 })
         .withMessage("Content must be between 1 and 30000 characters"),
     body("published").isBoolean().withMessage("Published must be a boolean"),
+    body("cover_image_url")
+        .notEmpty()
+        .withMessage("Cover image URL is required")
+        .isLength({ min: 1, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
+    body("cover_image_credit")
+        .notEmpty()
+        .withMessage("Cover image credit is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Cover image credit must be between 1 and 100 characters"),
 ];
 
 const partiallyUpdateBlogPostValidator = [
@@ -47,6 +67,18 @@ const partiallyUpdateBlogPostValidator = [
         .optional()
         .isBoolean()
         .withMessage("Published must be a boolean"),
+    body("cover_image_url")
+        .optional()
+        .notEmpty()
+        .withMessage("Cover image URL is required")
+        .isLength({ min: 1, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
+    body("cover_image_credit")
+        .optional()
+        .notEmpty()
+        .withMessage("Cover image credit is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Cover image credit must be between 1 and 100 characters"),
 ];
 
 const deleteBlogPostValidator = [

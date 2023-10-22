@@ -18,6 +18,18 @@ const BlogSchema = new Schema(
             maxLength: 30000,
         },
         published: { type: Boolean, required: true, default: false },
+        cover_image_url: {
+            type: String,
+            required: true,
+            minLength: 1,
+            maxLength: 255,
+        },
+        cover_image_credit: {
+            type: String,
+            required: true,
+            minLength: 1,
+            maxLength: 100,
+        },
     },
     { timestamps: true }
 );
