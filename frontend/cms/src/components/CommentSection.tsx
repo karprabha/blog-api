@@ -3,6 +3,8 @@ import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import useFetch from "../hooks/useFetch";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 interface CommentData {
     _id: string;
     author: {
@@ -35,9 +37,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({ blogId }) => {
         let commentList: CommentData[] = [];
 
         try {
-            const response = await fetch(`/api/v1/blogs/${blogId}/comments`, {
-                method: "GET",
-            });
+            const response = await fetch(
+                `${API_URI}/api/v1/blogs/${blogId}/comments`,
+                {
+                    method: "GET",
+                }
+            );
 
             if (response.ok) {
                 const { results } = await response.json();
@@ -52,13 +57,16 @@ const CommentSection: React.FC<CommentSectionProps> = ({ blogId }) => {
 
     const addComment = async (blogId: string, comment: string) => {
         try {
-            const response = await fetch(`/api/v1/blogs/${blogId}/comments`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ text: comment }),
-            });
+            const response = await fetch(
+                `${API_URI}/api/v1/blogs/${blogId}/comments`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ text: comment }),
+                }
+            );
 
             if (!response.ok) {
                 console.error(
@@ -79,7 +87,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ blogId }) => {
     ) => {
         try {
             const response = await fetch(
-                `/api/v1/blogs/${blogId}/comments/${commentId}`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments/${commentId}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -104,7 +112,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ blogId }) => {
     const deleteComment = async (blogId: string, commentId: string) => {
         try {
             const response = await fetch(
-                `/api/v1/blogs/${blogId}/comments/${commentId}`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments/${commentId}`,
                 {
                     method: "DELETE",
                 }

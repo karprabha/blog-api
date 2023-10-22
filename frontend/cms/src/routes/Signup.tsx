@@ -6,6 +6,7 @@ const FAMILYNAME_REGEX = /^[A-Z][a-z]{1,23}$/;
 const USERNAME_REGEX = /^[a-z][a-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const SUCCESS_REDIRECT_URL = "/login";
+const API_URI = import.meta.env.VITE_API_URI;
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -72,7 +73,7 @@ const Signup = () => {
         };
 
         try {
-            const response = await fetch("/api/v1/users", {
+            const response = await fetch(`${API_URI}/api/v1/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -3,6 +3,8 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 type BlogPostType = {
     _id: string;
     author: {
@@ -58,10 +60,13 @@ const EditBlogPost = () => {
 
         const getBlog = async () => {
             try {
-                const response = await fetch(`/api/v1/blogs/${params.id}`, {
-                    method: "GET",
-                    signal: controller.signal,
-                });
+                const response = await fetch(
+                    `${API_URI}/api/v1/blogs/${params.id}`,
+                    {
+                        method: "GET",
+                        signal: controller.signal,
+                    }
+                );
 
                 if (response.ok) {
                     const { blog } = await response.json();
@@ -97,17 +102,20 @@ const EditBlogPost = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`/api/v1/blogs/${params.id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    title,
-                    content,
-                    published,
-                    cover_image_url: coverImageURL,
-                    cover_image_credit: coverImageCredit,
-                }),
-            });
+            const response = await fetch(
+                `${API_URI}/api/v1/blogs/${params.id}`,
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        title,
+                        content,
+                        published,
+                        cover_image_url: coverImageURL,
+                        cover_image_credit: coverImageCredit,
+                    }),
+                }
+            );
 
             if (response.ok) {
                 navigate(`/blogs/${params.id}`);

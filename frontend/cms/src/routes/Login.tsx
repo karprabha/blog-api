@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 const Login = () => {
     const { setAuth, persist, setPersist } = useAuth();
     const userRef = useRef<HTMLInputElement>(null);
@@ -29,7 +31,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch("/api/v1/auth/login", {
+            const response = await fetch(`${API_URI}/api/v1/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),

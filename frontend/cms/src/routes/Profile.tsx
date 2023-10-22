@@ -8,6 +8,8 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "../components/CodeBlock";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 interface User {
     _id: string;
     first_name: string;
@@ -61,10 +63,13 @@ const Profile = () => {
 
         const getUser = async () => {
             try {
-                const response = await fetch(`/api/v1/users/${user_id}`, {
-                    method: "GET",
-                    signal: controller.signal,
-                });
+                const response = await fetch(
+                    `${API_URI}/api/v1/users/${user_id}`,
+                    {
+                        method: "GET",
+                        signal: controller.signal,
+                    }
+                );
 
                 if (response.ok) {
                     const data = await response.json();

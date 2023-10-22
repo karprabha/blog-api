@@ -1,11 +1,13 @@
 import useAuth from "./useAuth";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
 
     const refresh = async () => {
         try {
-            const response = await fetch("/api/v1/auth/refresh", {
+            const response = await fetch(`${API_URI}/api/v1/auth/refresh`, {
                 method: "POST",
                 credentials: "include",
             });

@@ -7,6 +7,8 @@ import CodeBlock from "../components/CodeBlock";
 import remarkGfm from "remark-gfm";
 import CommentSection from "../components/CommentSection";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 type BlogPostType = {
     _id: string;
     author: {
@@ -41,10 +43,13 @@ const BlogPost = () => {
 
         const getBlog = async () => {
             try {
-                const response = await fetch(`/api/v1/blogs/${params.id}`, {
-                    method: "GET",
-                    signal: controller.signal,
-                });
+                const response = await fetch(
+                    `${API_URI}/api/v1/blogs/${params.id}`,
+                    {
+                        method: "GET",
+                        signal: controller.signal,
+                    }
+                );
 
                 if (response.ok) {
                     const { blog } = await response.json();
@@ -75,13 +80,16 @@ const BlogPost = () => {
     const handlePublishToggle = async () => {
         try {
             const newPublishedStatus = !blog?.published;
-            const response = await fetch(`/api/v1/blogs/${params.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ published: newPublishedStatus }),
-            });
+            const response = await fetch(
+                `${API_URI}/api/v1/blogs/${params.id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ published: newPublishedStatus }),
+                }
+            );
 
             if (response.ok) {
                 setBlog((prevBlog: BlogPostType | null) => ({
@@ -102,9 +110,12 @@ const BlogPost = () => {
 
     const confirmDelete = async () => {
         try {
-            const response = await fetch(`/api/v1/blogs/${params.id}`, {
-                method: "DELETE",
-            });
+            const response = await fetch(
+                `${API_URI}/api/v1/blogs/${params.id}`,
+                {
+                    method: "DELETE",
+                }
+            );
 
             if (response.ok) {
                 navigate("/");

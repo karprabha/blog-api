@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
 
+const API_URI = import.meta.env.VITE_API_URI;
+
 const CreateBlogPost = () => {
     const fetch = useFetch();
     const failedAuth = useFailedAuth();
@@ -34,7 +36,7 @@ const CreateBlogPost = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch("/api/v1/blogs", {
+            const response = await fetch(`${API_URI}/api/v1/blogs`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
