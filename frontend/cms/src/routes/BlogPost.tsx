@@ -189,9 +189,10 @@ const BlogPost = () => {
                     </p>
                 </div>
 
-                <ReactMarkdown className="mt-4 mb-2 prose prose-pre:p-0">
-                    {`![cover-img](${blog.cover_image_url})`}
-                </ReactMarkdown>
+                <div className="mt-4 mb-4 prose text-right">
+                    <img src={blog.cover_image_url} alt={blog.title} />
+                    Image By {blog.cover_image_credit}
+                </div>
 
                 <ReactMarkdown
                     className="mb-10 prose prose-pre:p-0"
