@@ -1,41 +1,71 @@
+import { useEffect, useState } from "react";
+import format from "date-fns/format";
+import { Link } from "react-router-dom";
+
+const API_URI = import.meta.env.VITE_API_URI;
+
+interface Blog {
+    _id: string;
+    author: string;
+    title: string;
+    content: string;
+    published: boolean;
+    cover_image_url: string;
+    cover_image_credit: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 const Home = () => {
+    const [blogPosts, setBlogPosts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${API_URI}/api/v1/blogs`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBlogPosts(data.results);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
-        <div className="container mx-auto my-10 p-4 bg-white shadow-lg rounded-lg">
-            <h1 className="text-4xl font-bold mb-4 text-indigo-800">
-                Welcome to{" "}
-                <span className="text-cyan-600">CodeGeekCentral CMS</span>
-            </h1>
-            <p className="text-lg text-gray-900">
-                Welcome to the{" "}
-                <span className="text-indigo-800">
-                    CodeGeekCentral Content Management System (CMS)
-                </span>
-                , your central hub for managing and publishing{" "}
-                <span className="text-cyan-700">
-                    coding and technology-related content
-                </span>
-                . Whether you're a{" "}
-                <span className="text-pink-600">seasoned developer</span> or
-                just getting started, we've got something for you. Explore the
-                latest <span className="text-pink-600">tech trends</span>,{" "}
-                <span className="text-cyan-700">coding tutorials</span>, and
-                in-depth{" "}
-                <span className="text-indigo-800">
-                    articles from experts in the field
-                </span>
-                .
-            </p>
-            <p className="text-lg text-gray-900">
-                Dive into the world of{" "}
-                <span className="text-indigo-800">programming</span>,{" "}
-                <span className="text-pink-600">web development</span>,{" "}
-                <span className="text-cyan-700">software engineering</span>, and
-                much more. We're here to help you{" "}
-                <span className="text-pink-600">organize your knowledge</span>,{" "}
-                <span className="text-cyan-700">create and manage content</span>
-                , and become a{" "}
-                <span className="text-indigo-800">coding enthusiast</span>!
-            </p>
+        <div className="container mx-auto mt-5 mb-10 px-4">
+            <h2 className="text-2xl font-semibold my-4">Latest Blog Posts</h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {blogPosts.map((blog: Blog) => (
+                    <div
+                        key={blog._id}
+                        className="bg-white p-4 rounded-lg shadow"
+                    >
+                        <Link to={`/blogs/${blog._id}`}>
+                            <div className="mb-4">
+                                <img
+                                    src={blog.cover_image_url}
+                                    alt={blog.title}
+                                    className="w-full h-60 object-fill"
+                                />
+                            </div>
+                            <h3 className="text-xl font-semibold">
+                                {blog.title}
+                            </h3>
+                        </Link>
+                        <p className="text-gray-600 my-2">
+                            {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
+                        </p>
+                        <p className="text-gray-700">
+                            {blog.content.slice(0, 100) + "..."}
+                        </p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
