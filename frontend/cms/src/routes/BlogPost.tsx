@@ -191,7 +191,7 @@ const BlogPost = () => {
 
                 <div className="mt-4 mb-4 prose text-right">
                     <img src={blog.cover_image_url} alt={blog.title} />
-                    Image By {blog.cover_image_credit}
+                    Image By @{blog.cover_image_credit}
                 </div>
 
                 <ReactMarkdown
