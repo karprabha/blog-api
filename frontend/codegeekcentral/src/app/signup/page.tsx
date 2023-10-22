@@ -10,6 +10,8 @@ const USERNAME_REGEX = /^[a-z][a-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const SUCCESS_REDIRECT_URL = "/login";
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
 const Signup = () => {
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
@@ -76,7 +78,7 @@ const Signup = () => {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/users", {
+            const response = await fetch(`${API_URI}/api/v1/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

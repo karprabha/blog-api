@@ -1,5 +1,7 @@
 import useFetch from "@/hooks/useFetch";
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
 interface CommentData {
     _id: string;
     author: {
@@ -23,7 +25,7 @@ const Comments = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/v1/blogs/${blogId}/comments`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments`,
                 {
                     method: "GET",
                 }
@@ -43,7 +45,7 @@ const Comments = () => {
     const AddComment = async (blogId: string, comment: string) => {
         try {
             const response = await fetchWithAuth(
-                `http://localhost:3000/api/v1/blogs/${blogId}/comments`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments`,
                 {
                     method: "POST",
                     headers: {
@@ -72,7 +74,7 @@ const Comments = () => {
     ) => {
         try {
             const response = await fetchWithAuth(
-                `http://localhost:3000/api/v1/blogs/${blogId}/comments/${commentId}`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments/${commentId}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -97,7 +99,7 @@ const Comments = () => {
     const DeleteComment = async (blogId: string, commentId: string) => {
         try {
             const response = await fetchWithAuth(
-                `http://localhost:3000/api/v1/blogs/${blogId}/comments/${commentId}`,
+                `${API_URI}/api/v1/blogs/${blogId}/comments/${commentId}`,
                 {
                     method: "DELETE",
                 }

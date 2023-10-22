@@ -10,6 +10,8 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "../components/CodeBlock";
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
 interface User {
     _id: string;
     first_name: string;
@@ -63,7 +65,7 @@ const Profile = () => {
         const getUser = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:3000/api/v1/users/${user_id}`,
+                    `${API_URI}/api/v1/users/${user_id}`,
                     {
                         method: "GET",
                         signal: controller.signal,

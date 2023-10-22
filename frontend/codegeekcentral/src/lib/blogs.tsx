@@ -1,3 +1,5 @@
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
 interface Blog {
     _id: string;
     author: string;
@@ -13,7 +15,7 @@ const Blogs = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/v1/blogs?limit=10000000`,
+                `${API_URI}/api/v1/blogs?limit=10000000`,
                 {
                     method: "GET",
                 }
@@ -39,12 +41,9 @@ const Blogs = () => {
     const GetBlogData = async (id: string) => {
         let blogData = {};
         try {
-            const response = await fetch(
-                `http://localhost:3000/api/v1/blogs/${id}`,
-                {
-                    method: "GET",
-                }
-            );
+            const response = await fetch(`${API_URI}/api/v1/blogs/${id}`, {
+                method: "GET",
+            });
 
             if (response.ok) {
                 const { blog } = await response.json();
@@ -65,7 +64,7 @@ const Blogs = () => {
 
         try {
             const response = await fetch(
-                "http://localhost:3000/api/v1/blogs?limit=10000000",
+                `${API_URI}/api/v1/blogs?limit=10000000`,
                 {
                     method: "GET",
                 }

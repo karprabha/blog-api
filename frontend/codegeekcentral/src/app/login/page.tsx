@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useAuth from "../../hooks/useAuth";
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+
 const Login = () => {
     const { setAuth, persist, setPersist } = useAuth();
     const userRef = useRef<HTMLInputElement>(null);
@@ -30,14 +32,11 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch(
-                "http://localhost:3000/api/v1/auth/login",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password }),
-                }
-            );
+            const response = await fetch(`${API_URI}/api/v1/auth/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
 
             if (response.ok) {
                 const { accessToken } = await response.json();
