@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import CodeBlock from "../components/CodeBlock";
 import remarkGfm from "remark-gfm";
 import CommentSection from "../components/CommentSection";
+import format from "date-fns/format";
 
 const API_URI = import.meta.env.VITE_API_URI;
 
@@ -22,6 +23,8 @@ type BlogPostType = {
     published: boolean;
     cover_image_url: string;
     cover_image_credit: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 const BlogPost = () => {
@@ -175,10 +178,20 @@ const BlogPost = () => {
                     {"# " + blog.title}
                 </ReactMarkdown>
 
-                <p className="prose text-gray-500 text-right mb-4">
-                    By {blog.author.first_name} {blog.author.family_name} (@
-                    {blog.author.username})
-                </p>
+                <div>
+                    <p className="prose text-gray-500">
+                        By {blog.author.first_name} {blog.author.family_name} (@
+                        {blog.author.username})
+                    </p>
+
+                    <p className="prose text-gray-500 mb-4">
+                        {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
+                    </p>
+                </div>
+
+                <ReactMarkdown className="mt-4 mb-2 prose prose-pre:p-0">
+                    {`![cover-img](${blog.cover_image_url})`}
+                </ReactMarkdown>
 
                 <ReactMarkdown
                     className="mb-10 prose prose-pre:p-0"
