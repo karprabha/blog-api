@@ -43,8 +43,8 @@ const CreateBlogPost = () => {
                     title,
                     content,
                     published,
-                    coverImageURL,
-                    coverImageCredit,
+                    cover_image_url: coverImageURL,
+                    cover_image_credit: coverImageCredit,
                 }),
             });
 
