@@ -7,13 +7,18 @@ import paginate from "../middlewares/pagination.middleware.js";
 import userController from "../controllers/user.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import checkOwnership from "../middlewares/ownership.middleware.js";
+import visibilityMiddleware from "../middlewares/visibility.middleware.js";
 import queryValidationMiddleware from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
 router.get("/users", paginate(User), userController.getAllUsers);
 
-router.get("/users/:id", userController.getUserById);
+router.get(
+    "/users/:id",
+    visibilityMiddleware.checkVisibility(["admin", "user"], "user"),
+    userController.getUserById
+);
 
 router.post(
     "/users",

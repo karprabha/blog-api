@@ -19,9 +19,15 @@ const getAllUsers = expressAsyncHandler(async (req, res, next) => {
 });
 
 const getUserById = expressAsyncHandler(async (req, res, next) => {
+    const filter = req.isAuthorized ? {} : { published: true };
+
     const [user, blogs, recentComments] = await Promise.all([
         User.findById(req.params.id, "first_name family_name username role"),
-        Blog.find({ author: req.params.id }, "title").sort({ createdAt: -1 }),
+        Blog.find({ author: req.params.id, ...filter }, "title published").sort(
+            {
+                createdAt: -1,
+            }
+        ),
         Comment.find({ author: req.params.id }, "text")
             .populate("blogPost", "title")
             .sort({ createdAt: -1 })
