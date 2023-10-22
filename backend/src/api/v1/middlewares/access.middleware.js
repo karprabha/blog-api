@@ -1,6 +1,5 @@
 import Blog from "../models/blog.js";
 import authMiddleware from "./auth.middleware.js";
-import checkOwnership from "./ownership.middleware.js";
 
 const checkBlogAccess = async (req, res, next) => {
     const { blogId } = req.params;
@@ -12,19 +11,30 @@ const checkBlogAccess = async (req, res, next) => {
         }
 
         if (!blog.published) {
-            authMiddleware.authenticateToken(req, res, () => {
+            return authMiddleware.authenticateToken(req, res, () => {
                 authMiddleware.authorizeRoles(["admin"])(req, res, () => {
-                    checkOwnership("blog")(req, res, () => {
-                        next();
-                    });
+                    const userIdFromToken = req.user.id;
+
+                    const isAuthorNotMatching = blog.author
+                        ? blog.author.toString() !== userIdFromToken
+                        : true;
+
+                    const isUserIdNotMatching =
+                        blog._id.toString() !== userIdFromToken;
+
+                    if (isAuthorNotMatching && isUserIdNotMatching) {
+                        return res.status(403).json({
+                            message: "Access denied. Insufficient permissions.",
+                        });
+                    }
+                    return next();
                 });
             });
         }
+        return next();
     } catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
-
-    return next();
 };
 
 export default { checkBlogAccess };
