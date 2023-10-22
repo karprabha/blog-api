@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import CodeBlock from "../../components/CodeBlock";
 import blogs from "@/lib/blogs";
 import CommentSection from "../components/CommentSection";
+import format from "date-fns/format";
 
 type BlogPostType = {
     _id: string;
@@ -14,7 +15,10 @@ type BlogPostType = {
     };
     title: string;
     content: string;
+    cover_image_url: string;
+    cover_image_credit: string;
     createdAt: string;
+    updatedAt: string;
 };
 
 export async function getStaticPaths() {
@@ -38,10 +42,21 @@ const BlogPost = async ({ params }) => {
                     {"# " + blog.title}
                 </ReactMarkdown>
 
-                <p className="prose text-gray-500 text-right mb-4">
-                    By {blog.author.first_name} {blog.author.family_name} (@
-                    {blog.author.username})
-                </p>
+                <div>
+                    <p className="prose text-gray-500">
+                        By {blog.author.first_name} {blog.author.family_name} (@
+                        {blog.author.username})
+                    </p>
+
+                    <p className="prose text-gray-500 mb-4">
+                        {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
+                    </p>
+                </div>
+
+                <div className="mt-4 mb-4 prose text-right">
+                    <img src={blog.cover_image_url} alt={blog.title} />
+                    Image By @{blog.cover_image_credit}
+                </div>
 
                 <ReactMarkdown
                     className="mb-10 prose prose-pre:p-0"

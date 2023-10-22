@@ -6,7 +6,10 @@ interface Blog {
     title: string;
     content: string;
     published: boolean;
+    cover_image_url: string;
+    cover_image_credit: string;
     createdAt: string;
+    updatedAt: string;
 }
 
 const Blogs = () => {
