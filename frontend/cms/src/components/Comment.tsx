@@ -13,6 +13,7 @@ interface CommentData {
         first_name: string;
         family_name: string;
         username: string;
+        avatar_url: string;
     };
     blogPost: string;
     text: string;
@@ -80,14 +81,35 @@ const Comment: React.FC<CommentProps> = ({
                 </div>
             ) : (
                 <div>
-                    <p className="text-base font-bold text-blue-500">
-                        {comment.author.first_name} {comment.author.family_name}{" "}
-                        (@
-                        {comment.author.username})
-                    </p>
-                    <p className="text-gray-500 text-xs">
-                        {format(new Date(comment.createdAt), "MMMM d, yyyy")}
-                    </p>
+                    <div className="flex items-center mb-4">
+                        <img
+                            src={comment.author.avatar_url}
+                            alt={`Avatar for ${comment.author.first_name} ${comment.author.family_name}`}
+                            className="my-auto w-12 h-12 rounded-full mr-4"
+                        />
+                        <div>
+                            <p
+                                className={`text-base font-bold ${
+                                    auth &&
+                                    auth.accessToken &&
+                                    userId === comment.author._id
+                                        ? "text-blue-500"
+                                        : "text-gray-500"
+                                }`}
+                            >
+                                {comment.author.first_name}{" "}
+                                {comment.author.family_name} (@
+                                {comment.author.username})
+                            </p>
+
+                            <p className="text-gray-500 text-xs">
+                                {format(
+                                    new Date(comment.createdAt),
+                                    "MMMM d, yyyy"
+                                )}
+                            </p>
+                        </div>
+                    </div>
 
                     <ReactMarkdown
                         className="text-gray-700 mt-2"

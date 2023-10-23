@@ -12,6 +12,7 @@ interface CommentData {
         first_name: string;
         family_name: string;
         username: string;
+        avatar_url: string;
     };
     blogPost: string;
     text: string;

@@ -17,6 +17,7 @@ type BlogPostType = {
         first_name: string;
         family_name: string;
         username: string;
+        avatar_url: string;
     };
     title: string;
     content: string;
@@ -178,18 +179,25 @@ const BlogPost = () => {
                     {"# " + blog.title}
                 </ReactMarkdown>
 
-                <div>
-                    <p className="prose text-gray-500">
-                        By {blog.author.first_name} {blog.author.family_name} (@
-                        {blog.author.username})
-                    </p>
-
-                    <p className="prose text-gray-500 mb-4">
-                        {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
-                    </p>
+                <div className="prose my-7 flex items-center mb-4">
+                    <img
+                        src={blog.author.avatar_url}
+                        alt={`Avatar for ${blog.author.first_name} ${blog.author.family_name}`}
+                        className="my-auto w-12 h-12 rounded-full mr-4"
+                    />
+                    <div>
+                        <p className="prose my-0 text-gray-500">
+                            {blog.author.first_name} {blog.author.family_name}{" "}
+                            (@
+                            {blog.author.username})
+                        </p>
+                        <p className="prose my-0 text-gray-500">
+                            {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
+                        </p>
+                    </div>
                 </div>
 
-                <div className="mt-4 mb-4 prose text-right">
+                <div className="mt-7 mb-4 prose text-right">
                     <img src={blog.cover_image_url} alt={blog.title} />
                     Image By @{blog.cover_image_credit}
                 </div>

@@ -16,11 +16,13 @@ interface User {
     family_name: string;
     username: string;
     role: string;
+    avatar_url: string;
 }
 
 interface Blog {
     _id: string;
     title: string;
+    published: boolean;
 }
 
 interface Comment {
@@ -100,39 +102,37 @@ const Profile = () => {
         <>
             <div className="bg-white mt-10 shadow-md rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4">
+                    <div className="flex justify-center items-center">
                         {user && (
                             <div className="text-center">
-                                <h2 className="text-2xl font-semibold mb-2">
-                                    User Profile
-                                </h2>
-                                <p className="text-gray-500 text-sm mb-2">
-                                    <strong>Username:</strong>{" "}
-                                    {user.user.username}
-                                </p>
-                                <p className="text-gray-500 text-sm">
-                                    <strong>Role:</strong> {user.user.role}
-                                </p>
+                                <img
+                                    src={user.user.avatar_url}
+                                    alt={`Avatar for ${user.user.first_name} ${user.user.family_name}`}
+                                    className="m-auto w-48 h-48 rounded-full"
+                                />
                             </div>
                         )}
                     </div>
-                    <div className="p-4">
+                    <div className="flex justify-center items-center text-center md:justify-start md:text-left">
                         {user && (
                             <div>
-                                <h3 className="text-lg font-semibold mb-2">
+                                <h3 className="text-2xl font-semibold mb-2">
                                     Profile Information
                                 </h3>
-                                <p className="text-gray-500 text-sm mb-2">
+                                <p className="text-gray-500 text-base mb-1">
                                     <strong>First Name:</strong>{" "}
                                     {user.user.first_name}
                                 </p>
-                                <p className="text-gray-500 text-sm mb-2">
+                                <p className="text-gray-500 text-base mb-1">
                                     <strong>Family Name:</strong>{" "}
                                     {user.user.family_name}
                                 </p>
-                                <p className="text-gray-500 text-sm">
+                                <p className="text-gray-500 text-base mb-1">
                                     <strong>Username:</strong>{" "}
                                     {user.user.username}
+                                </p>
+                                <p className="text-gray-500 text-base">
+                                    <strong>Role:</strong> {user.user.role}
                                 </p>
                             </div>
                         )}
