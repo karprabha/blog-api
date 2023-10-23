@@ -12,7 +12,7 @@ const getAllComments = expressAsyncHandler(async (req, res, next) => {
 
     const authors = await User.find(
         { _id: { $in: authorIds } },
-        "first_name family_name username"
+        "first_name family_name username avatar_url"
     );
 
     const authorMap = new Map(
@@ -33,7 +33,7 @@ const getCommentById = expressAsyncHandler(async (req, res, next) => {
         blogPost: req.params.blogId,
         _id: req.params.id,
     })
-        .populate("author", "first_name family_name username")
+        .populate("author", "first_name family_name username avatar_url")
         .exec();
 
     if (!comment) {

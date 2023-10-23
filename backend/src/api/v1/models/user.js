@@ -14,6 +14,13 @@ const UserSchema = new Schema({
         enum: ["user", "admin"],
         default: "user",
     },
+    avatar_url: {
+        type: String,
+        default:
+            "https://res.cloudinary.com/dn3rb7yf5/image/upload/v1698059883/blank_avatar_wdye0t.png",
+        minlength: 10,
+        maxlength: 255,
+    },
 });
 
 UserSchema.pre("findOneAndDelete", async function (next) {

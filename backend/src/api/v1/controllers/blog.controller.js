@@ -10,7 +10,7 @@ const getAllBlogPosts = expressAsyncHandler(async (req, res, next) => {
 const getBlogPostById = expressAsyncHandler(async (req, res, next) => {
     const [blog, comments] = await Promise.all([
         Blog.findById(req.params.id)
-            .populate("author", "first_name family_name username")
+            .populate("author", "first_name family_name username avatar_url")
             .exec(),
         Comment.find({ blogPost: req.params.id })
             .sort({ createdAt: -1 })

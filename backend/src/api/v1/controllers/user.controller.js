@@ -22,7 +22,10 @@ const getUserById = expressAsyncHandler(async (req, res, next) => {
     const filter = req.isAuthorized ? {} : { published: true };
 
     const [user, blogs, recentComments] = await Promise.all([
-        User.findById(req.params.id, "first_name family_name username role"),
+        User.findById(
+            req.params.id,
+            "first_name family_name username role avatar_url"
+        ),
         Blog.find({ author: req.params.id, ...filter }, "title published").sort(
             {
                 createdAt: -1,
@@ -79,7 +82,7 @@ const updateUserById = expressAsyncHandler(async (req, res, next) => {
 });
 
 const partiallyUpdateUserById = expressAsyncHandler(async (req, res, next) => {
-    const { first_name, family_name, username } = req.body;
+    const { first_name, family_name, username, avatar_url } = req.body;
     const password = req.body.password
         ? await bcrypt.hash(req.body.password, 10)
         : undefined;
@@ -89,6 +92,7 @@ const partiallyUpdateUserById = expressAsyncHandler(async (req, res, next) => {
         ...(family_name !== undefined && { family_name }),
         ...(username !== undefined && { username }),
         ...(password !== undefined && { password }),
+        ...(avatar_url !== undefined && { avatar_url }),
     };
 
     const partiallyUpdatedUser = await User.findByIdAndUpdate(

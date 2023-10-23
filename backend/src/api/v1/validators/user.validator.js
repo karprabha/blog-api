@@ -39,6 +39,12 @@ const createUserValidator = [
         .withMessage(
             'Password must contain at least one special character (!@#$%^&*(),.?":{}|<>))'
         ),
+    body("avatar_url")
+        .optional()
+        .isURL()
+        .withMessage("Invalid URL format for the avatar")
+        .isLength({ min: 10, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
 ];
 
 const updateUserValidator = [
@@ -79,6 +85,12 @@ const updateUserValidator = [
         .withMessage(
             'Password must contain at least one special character (!@#$%^&*(),.?":{}|<>))'
         ),
+    body("avatar_url")
+        .optional()
+        .isURL()
+        .withMessage("Invalid URL format for the avatar")
+        .isLength({ min: 10, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
 ];
 
 const partiallyUpdateUserValidator = [
@@ -115,6 +127,12 @@ const partiallyUpdateUserValidator = [
         .withMessage(
             'Password must contain at least one special character (!@#$%^&*(),.?":{}|<>))'
         ),
+    body("avatar_url")
+        .optional()
+        .isURL()
+        .withMessage("Invalid URL format for the avatar")
+        .isLength({ min: 10, max: 255 })
+        .withMessage("Cover image URL must be between 1 and 100 characters"),
 ];
 
 const deleteUserValidator = [
