@@ -52,16 +52,21 @@ const Profile = () => {
     const failedAuth = useFailedAuth();
 
     const effectRun = useRef(false);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
     const location = useLocation();
     const [user, setUser] = useState<UserProfileData | null>(null);
+
+    const [avatarInput, setAvatarInput] = useState("");
+    const [avatarFile, setAvatarFile] = useState<File>();
+    const [showAvatarUpdateModal, setShowAvatarUpdateModal] = useState(false);
+
+    const decoded: JwtPayload = jwt_decode(auth.accessToken);
+    const { user_id } = decoded;
 
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
-
-        const decoded: JwtPayload = jwt_decode(auth.accessToken);
-
-        const { user_id } = decoded;
 
         const getUser = async () => {
             try {
@@ -98,18 +103,174 @@ const Profile = () => {
         };
     }, []);
 
+    const updateAvatarWithUrl = async (avatar_url: string) => {
+        try {
+            const response = await fetch(`${API_URI}/api/v1/users/${user_id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ avatar_url }),
+            });
+
+            if (response.ok) {
+                setUser((prevState) => {
+                    if (prevState) {
+                        return {
+                            ...prevState,
+                            user: {
+                                ...prevState.user,
+                                avatar_url: avatar_url,
+                            },
+                        };
+                    }
+                    return prevState;
+                });
+                return true;
+            } else if (response.status === 401) {
+                failedAuth(location);
+            }
+        } catch (err) {
+            console.error(err);
+            failedAuth(location);
+        }
+    };
+
+    const updateAvatarWithFile = async (file: File) => {
+        try {
+            const formData = new FormData();
+            formData.append("avatar", file);
+
+            const response = await fetch(`${API_URI}/api/v1/upload`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const { url } = await response.json();
+                updateAvatarWithUrl(url);
+                return true;
+            } else if (response.status === 401) {
+                failedAuth(location);
+            } else {
+                const err = await response.json();
+                console.log(err);
+            }
+        } catch (err) {
+            console.error(err);
+            failedAuth(location);
+        }
+    };
+
+    const handleAvatarUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (avatarInput) {
+            updateAvatarWithUrl(avatarInput);
+        } else if (avatarFile) {
+            updateAvatarWithFile(avatarFile);
+        } else {
+            console.log("no option is selected");
+        }
+
+        setShowAvatarUpdateModal(false);
+    };
+
+    const handleAvatarInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setAvatarInput(e.target.value);
+        setAvatarFile(undefined);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        const file: File = (target.files as FileList)[0];
+
+        if (file) {
+            setAvatarFile(file);
+            setAvatarInput("");
+        }
+    };
+
     return (
         <>
+            {showAvatarUpdateModal && (
+                <div
+                    className={`fixed top-0 left-0 w-full h-screen bg-black bg-opacity-40 z-50 flex items-center justify-center`}
+                >
+                    <div className="modal-box p-4 bg-white rounded shadow-lg">
+                        <h2 className="text-2xl font-semibold mb-4">
+                            Update Your Avatar
+                        </h2>
+                        <p className="text-gray-700 mb-4">
+                            Enter an image URL or upload a new image:
+                        </p>
+
+                        <form onSubmit={handleAvatarUpdate}>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                className="border p-2 mb-4 w-full"
+                                value={avatarInput}
+                                onChange={handleAvatarInputChange}
+                            />
+
+                            <p className="text-center text-gray-700 mb-4">OR</p>
+
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="mb-4"
+                                ref={fileInputRef}
+                                onChange={handleFileInputChange}
+                            />
+
+                            <div className="flex justify-end">
+                                <button
+                                    type="button"
+                                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
+                                    onClick={() =>
+                                        setShowAvatarUpdateModal(false)
+                                    }
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                >
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <div className="bg-white mt-10 shadow-md rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex justify-center items-center">
                         {user && (
-                            <div className="text-center">
+                            <div className="text-center relative group">
                                 <img
                                     src={user.user.avatar_url}
                                     alt={`Avatar for ${user.user.first_name} ${user.user.family_name}`}
-                                    className="m-auto w-48 h-48 rounded-full"
+                                    className="m-auto w-48 h-48 rounded-full avatar-img"
                                 />
+                                <div
+                                    className="hidden w-48 h-48 rounded-full absolute inset-0  items-center justify-center group-hover:flex bg-black bg-opacity-60 cursor-pointer text-white text-xl"
+                                    onClick={() =>
+                                        setShowAvatarUpdateModal(true)
+                                    }
+                                >
+                                    Change Avatar
+                                </div>
                             </div>
                         )}
                     </div>
