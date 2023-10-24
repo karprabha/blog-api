@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { AuthProvider } from "@/context/AuthProvider";
+import Script from "next/script";
 
 const roboto = Roboto({
     weight: "400",
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
     authors: [{ name: "Prabhakar Yadav" }],
 };
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export default function RootLayout({
     children,
 }: {
@@ -26,6 +29,19 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script id="google-analytics">
+                {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', ${GA_MEASUREMENT_ID});
+        `}
+            </Script>
+
             <body className={roboto.className}>
                 <AuthProvider>
                     <Header />
