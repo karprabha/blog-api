@@ -11,7 +11,13 @@ export async function generateStaticParams() {
     return paths;
 }
 
-const PublicUserProfile = async ({ params }) => {
+type UserParam = {
+    params: {
+        userId: string;
+    };
+};
+
+const PublicUserProfile: React.FC<UserParam> = async ({ params }) => {
     const { GetUserData } = users();
     const user = await GetUserData(params.userId);
 
@@ -107,6 +113,7 @@ const PublicUserProfile = async ({ params }) => {
                                 </div>
                                 <ReactMarkdown
                                     className="text-gray-700"
+                                    // @ts-ignore
                                     components={{ code: CodeBlock }}
                                     remarkPlugins={[remarkGfm]}
                                 >

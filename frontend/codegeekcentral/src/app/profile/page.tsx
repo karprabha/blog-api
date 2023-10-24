@@ -409,6 +409,7 @@ const Profile = () => {
                                 </div>
                                 <ReactMarkdown
                                     className="text-gray-700"
+                                    // @ts-ignore
                                     components={{ code: CodeBlock }}
                                     remarkPlugins={[remarkGfm]}
                                 >

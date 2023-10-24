@@ -16,6 +16,7 @@ interface CommentData {
         first_name: string;
         family_name: string;
         username: string;
+        avatar_url: string;
     };
     blogPost: string;
     text: string;
@@ -23,7 +24,6 @@ interface CommentData {
     updatedAt: string;
     __v: number;
 }
-
 interface JwtPayload {
     user_id: string;
     iat: number;
@@ -116,6 +116,7 @@ const Comment: React.FC<CommentProps> = ({
 
                     <ReactMarkdown
                         className="text-gray-700 mt-2"
+                        // @ts-ignore
                         components={{ code: CodeBlock }}
                         remarkPlugins={[remarkGfm]}
                     >

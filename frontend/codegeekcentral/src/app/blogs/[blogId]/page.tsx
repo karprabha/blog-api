@@ -31,9 +31,17 @@ export async function generateStaticParams() {
     return paths;
 }
 
-const BlogPost = async ({ params }) => {
+type BlogParam = {
+    params: {
+        blogId: string;
+    };
+};
+
+const BlogPost: React.FC<BlogParam> = async ({ params }) => {
     const { GetBlogData } = blogs();
-    const blog: BlogPostType = await GetBlogData(params.blogId);
+    const blog: BlogPostType = (await GetBlogData(
+        params.blogId
+    )) as BlogPostType;
 
     return (
         <>
@@ -70,6 +78,7 @@ const BlogPost = async ({ params }) => {
 
                 <ReactMarkdown
                     className="mb-10 prose prose-pre:p-0"
+                    // @ts-ignore
                     components={{ code: CodeBlock }}
                     remarkPlugins={[remarkGfm]}
                 >
