@@ -53,7 +53,6 @@ const Profile = () => {
     const { auth } = useAuth();
     const failedAuth = useFailedAuth();
 
-    const effectRun = useRef(false);
     const errRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [user, setUser] = useState<UserProfileData | null>(null);
@@ -64,31 +63,22 @@ const Profile = () => {
     const [showAvatarUpdateModal, setShowAvatarUpdateModal] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    let userId: string;
-    if (auth && auth.accessToken) {
-        const decoded: JwtPayload = jwt_decode(auth.accessToken);
-        const { user_id } = decoded;
-        userId = user_id;
-    }
-
     useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-
         const getUser = async () => {
+            const decoded: JwtPayload = jwt_decode(auth.accessToken);
+            const { user_id } = decoded;
+
             try {
                 const response = await fetch(
-                    `${API_URI}/api/v1/users/${userId}`,
+                    `${API_URI}/api/v1/users/${user_id}`,
                     {
                         method: "GET",
-                        signal: controller.signal,
                     }
                 );
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
-                    isMounted && setUser(data);
+                    setUser(data);
                 } else if (response.status === 401) {
                     failedAuth();
                 }
@@ -98,15 +88,7 @@ const Profile = () => {
             }
         };
 
-        if (effectRun.current) {
-            getUser();
-        }
-
-        return () => {
-            isMounted = false;
-            controller.abort();
-            effectRun.current = true;
-        };
+        getUser();
     }, []);
 
     useEffect(() => {
@@ -114,8 +96,11 @@ const Profile = () => {
     }, [avatarInput, avatarFile]);
 
     const updateAvatarWithUrl = async (avatar_url: string) => {
+        const decoded: JwtPayload = jwt_decode(auth.accessToken);
+        const { user_id } = decoded;
+
         try {
-            const response = await fetch(`${API_URI}/api/v1/users/${userId}`, {
+            const response = await fetch(`${API_URI}/api/v1/users/${user_id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
