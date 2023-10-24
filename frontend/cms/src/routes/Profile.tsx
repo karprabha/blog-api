@@ -387,20 +387,28 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className="bg-white mb-10 shadow-md rounded-lg p-6 mt-4">
-                <h2 className="text-2xl font-semibold mb-2">Recent Comments</h2>
+            <div className="bg-white mb-10 shadow-lg rounded-lg p-6 mt-4">
+                <h2 className="text-3xl font-semibold text-gray-900 mb-6">
+                    Recent Comments
+                </h2>
                 {user && (
                     <ul>
                         {user.recentComments.map((comment) => (
-                            <li key={comment._id}>
-                                <p>
-                                    <strong>Comment on:</strong>{" "}
-                                    <Link to={`/blogs/${comment.blogPost._id}`}>
+                            <li
+                                key={comment._id}
+                                className="border-b border-gray-200 py-6"
+                            >
+                                <div className="mb-2">
+                                    <p className="text-gray-600">Comment on:</p>
+                                    <Link
+                                        to={`/blogs/${comment.blogPost._id}`}
+                                        className="text-blue-500 hover:underline text-xl font-semibold"
+                                    >
                                         {comment.blogPost.title}
                                     </Link>
-                                </p>
+                                </div>
                                 <ReactMarkdown
-                                    className="text-gray-700 mt-2"
+                                    className="text-gray-700"
                                     components={{ code: CodeBlock }}
                                     remarkPlugins={[remarkGfm]}
                                 >
