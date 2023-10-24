@@ -1,7 +1,6 @@
 import Link from "next/link";
 import blogs from "@/lib/blogs";
 import { format } from "date-fns";
-import Image from "next/image";
 
 const Home = async () => {
     const { GetAllBlogs } = blogs();
