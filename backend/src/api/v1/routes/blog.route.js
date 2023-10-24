@@ -17,7 +17,7 @@ router.use("/blogs/:blogId", accessMiddleware.checkBlogAccess, commentRouter);
 
 router.get(
     "/blogs",
-    paginate(Blog, (query) => query.where({ published: true })),
+    paginate(Blog, (query, req) => query.where({ published: true })),
     blogController.getAllBlogPosts
 );
 

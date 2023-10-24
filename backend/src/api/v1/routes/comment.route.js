@@ -15,7 +15,9 @@ router.get(
     "/comments",
     commentValidator.getAllCommentsValidator,
     queryValidationMiddleware,
-    paginate(Comment),
+    paginate(Comment, (query, req) =>
+        query.where({ blogPost: req.params.blogId })
+    ),
     commentController.getAllComments
 );
 

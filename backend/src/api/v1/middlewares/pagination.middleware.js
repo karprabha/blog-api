@@ -18,7 +18,7 @@ const paginate =
                 req.originalUrl.split("?")[0]
             }`;
 
-            const results = await filterFunction(model.find())
+            const results = await filterFunction(model.find(), req)
                 .find()
                 .select(fields)
                 .sort(sort)
