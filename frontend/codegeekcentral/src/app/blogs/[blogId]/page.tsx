@@ -4,6 +4,7 @@ import CodeBlock from "../../components/CodeBlock";
 import blogs from "@/lib/blogs";
 import CommentSection from "../components/CommentSection";
 import format from "date-fns/format";
+import Link from "next/link";
 
 type BlogPostType = {
     _id: string;
@@ -12,9 +13,11 @@ type BlogPostType = {
         first_name: string;
         family_name: string;
         username: string;
+        avatar_url: string;
     };
     title: string;
     content: string;
+    published: boolean;
     cover_image_url: string;
     cover_image_credit: string;
     createdAt: string;
@@ -42,15 +45,25 @@ const BlogPost = async ({ params }) => {
                     {"# " + blog.title}
                 </ReactMarkdown>
 
-                <div>
-                    <p className="prose text-gray-500">
-                        By {blog.author.first_name} {blog.author.family_name} (@
-                        {blog.author.username})
-                    </p>
-
-                    <p className="prose text-gray-500 mb-4">
-                        {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
-                    </p>
+                <div className="prose my-7 flex items-center mb-4">
+                    <img
+                        src={blog.author.avatar_url}
+                        alt={`Avatar for ${blog.author.first_name} ${blog.author.family_name}`}
+                        className="my-auto w-12 h-12 rounded-full mr-4"
+                    />
+                    <div>
+                        <Link
+                            href={`/users/${blog.author._id}`}
+                            className="prose my-0 text-gray-500 no-underline"
+                        >
+                            {blog.author.first_name} {blog.author.family_name}{" "}
+                            (@
+                            {blog.author.username})
+                        </Link>
+                        <p className="prose my-0 text-gray-500">
+                            {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
+                        </p>
+                    </div>
                 </div>
 
                 <div className="mt-4 mb-4 prose text-right">
