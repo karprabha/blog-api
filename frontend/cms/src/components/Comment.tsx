@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "./CodeBlock";
+import { Link } from "react-router-dom";
 
 interface CommentData {
     _id: string;
@@ -88,7 +89,8 @@ const Comment: React.FC<CommentProps> = ({
                             className="my-auto w-12 h-12 rounded-full mr-4"
                         />
                         <div>
-                            <p
+                            <Link
+                                to={`/users/${comment.author._id}`}
                                 className={`text-base font-bold ${
                                     auth &&
                                     auth.accessToken &&
@@ -100,7 +102,7 @@ const Comment: React.FC<CommentProps> = ({
                                 {comment.author.first_name}{" "}
                                 {comment.author.family_name} (@
                                 {comment.author.username})
-                            </p>
+                            </Link>
 
                             <p className="text-gray-500 text-xs">
                                 {format(

@@ -12,6 +12,7 @@ import RequireAuth from "./components/RequireAuth.tsx";
 import CreateBlogPost from "./routes/CreateBlogPost.tsx";
 import Unauthorized from "./routes/UnauthorizedPage.tsx";
 import PersistLogin from "./components/PersistLogin.tsx";
+import PublicUserProfile from "./routes/PublicUserProfile.tsx";
 
 const Router = () => {
     const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const Router = () => {
                         {
                             path: "/blogs/:id",
                             element: <BlogPost />,
+                        },
+                        {
+                            path: "/users/:id",
+                            element: <PublicUserProfile />,
                         },
                         {
                             path: "/blogs/:id/edit",

@@ -186,11 +186,14 @@ const BlogPost = () => {
                         className="my-auto w-12 h-12 rounded-full mr-4"
                     />
                     <div>
-                        <p className="prose my-0 text-gray-500">
+                        <Link
+                            to={`/users/${blog.author._id}`}
+                            className="prose my-0 text-gray-500 no-underline"
+                        >
                             {blog.author.first_name} {blog.author.family_name}{" "}
                             (@
                             {blog.author.username})
-                        </p>
+                        </Link>
                         <p className="prose my-0 text-gray-500">
                             {format(new Date(blog.updatedAt), "MMMM d, yyyy")}
                         </p>
