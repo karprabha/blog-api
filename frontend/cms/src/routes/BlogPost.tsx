@@ -207,6 +207,7 @@ const BlogPost = () => {
 
                 <ReactMarkdown
                     className="mb-10 prose prose-pre:p-0"
+                    // @ts-ignore
                     components={{ code: CodeBlock }}
                     remarkPlugins={[remarkGfm]}
                 >
@@ -215,7 +216,7 @@ const BlogPost = () => {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 my-10">
-                <CommentSection blogId={params.id} />
+                <CommentSection blogId={params.id ?? ""} />
             </div>
 
             {showDeleteModal && (

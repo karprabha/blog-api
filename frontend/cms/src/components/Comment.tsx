@@ -115,6 +115,7 @@ const Comment: React.FC<CommentProps> = ({
 
                     <ReactMarkdown
                         className="text-gray-700 mt-2"
+                        // @ts-ignore
                         components={{ code: CodeBlock }}
                         remarkPlugins={[remarkGfm]}
                     >
