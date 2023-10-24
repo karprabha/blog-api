@@ -32,7 +32,11 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [auth, setAuth] = useState<AuthData>(initialAuthContextValue.auth);
 
-    const storedPersist = localStorage.getItem("persist");
+    let storedPersist;
+    if (typeof window !== "undefined") {
+        storedPersist = localStorage.getItem("persist");
+    }
+
     const [persist, setPersist] = useState(
         storedPersist ? JSON.parse(storedPersist) : false
     );
