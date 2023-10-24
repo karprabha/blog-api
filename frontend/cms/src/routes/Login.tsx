@@ -62,6 +62,14 @@ const Login = () => {
         }
     };
 
+    const handleDemoLogin = async () => {
+        const demoUsername: string = import.meta.env.VITE_DEMO_USERNAME;
+        const demoPassword: string = import.meta.env.VITE_DEMO_PASSWORD;
+
+        setUsername(demoUsername);
+        setPassword(demoPassword);
+    };
+
     const togglePersist = () => {
         setPersist((prev) => !prev);
     };
@@ -122,11 +130,19 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
+
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
                     >
                         Login
+                    </button>
+
+                    <button
+                        onClick={handleDemoLogin}
+                        className="w-full mt-4 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+                    >
+                        Privileged Demo Access
                     </button>
                     <div className="mb-4 mt-2">
                         <input
