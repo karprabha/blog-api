@@ -44,7 +44,7 @@ const createUserValidator = [
         .isURL()
         .withMessage("Invalid URL format for the avatar")
         .isLength({ min: 10, max: 255 })
-        .withMessage("Cover image URL must be between 1 and 100 characters"),
+        .withMessage("Avatar URL must be between 10 and 255 characters"),
 ];
 
 const updateUserValidator = [
@@ -90,7 +90,7 @@ const updateUserValidator = [
         .isURL()
         .withMessage("Invalid URL format for the avatar")
         .isLength({ min: 10, max: 255 })
-        .withMessage("Cover image URL must be between 1 and 100 characters"),
+        .withMessage("Avatar URL must be between 10 and 255 characters"),
 ];
 
 const partiallyUpdateUserValidator = [
@@ -132,7 +132,7 @@ const partiallyUpdateUserValidator = [
         .isURL()
         .withMessage("Invalid URL format for the avatar")
         .isLength({ min: 10, max: 255 })
-        .withMessage("Cover image URL must be between 1 and 100 characters"),
+        .withMessage("Avatar URL must be between 10 and 255 characters"),
 ];
 
 const deleteUserValidator = [
