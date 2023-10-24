@@ -64,8 +64,12 @@ const Profile = () => {
     const [showAvatarUpdateModal, setShowAvatarUpdateModal] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    const decoded: JwtPayload = jwt_decode(auth.accessToken);
-    const { user_id } = decoded;
+    let userId: string;
+    if (auth && auth.accessToken) {
+        const decoded: JwtPayload = jwt_decode(auth.accessToken);
+        const { user_id } = decoded;
+        userId = user_id;
+    }
 
     useEffect(() => {
         let isMounted = true;
@@ -74,7 +78,7 @@ const Profile = () => {
         const getUser = async () => {
             try {
                 const response = await fetch(
-                    `${API_URI}/api/v1/users/${user_id}`,
+                    `${API_URI}/api/v1/users/${userId}`,
                     {
                         method: "GET",
                         signal: controller.signal,
@@ -111,7 +115,7 @@ const Profile = () => {
 
     const updateAvatarWithUrl = async (avatar_url: string) => {
         try {
-            const response = await fetch(`${API_URI}/api/v1/users/${user_id}`, {
+            const response = await fetch(`${API_URI}/api/v1/users/${userId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
