@@ -357,19 +357,34 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className="bg-white shadow-md rounded-lg p-6 mt-4">
-                <h2 className="text-2xl font-semibold mb-2">Blogs</h2>
-                {user && (
-                    <ul>
-                        {user.blogs.map((blog) => (
-                            <li key={blog._id}>
-                                <Link to={`/blogs/${blog._id}`}>
-                                    {blog.title}
-                                </Link>
-                            </li>
+            <div className="bg-gray-100 py-6 mt-4">
+                <h2 className="text-2xl font-semibold mb-4">Blogs</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {user &&
+                        user.blogs.map((blog) => (
+                            <div
+                                key={blog._id}
+                                className="flex flex-col justify-between bg-white rounded-lg shadow-lg hover:shadow-xl"
+                            >
+                                <div className="p-4">
+                                    <h2 className="text-2xl font-semibold text-gray-800">
+                                        {blog.title}
+                                    </h2>
+                                    <p className="text-gray-600 mt-2">
+                                        {blog.published ? "Published" : "Draft"}
+                                    </p>
+                                </div>
+                                <div className="bg-gray-100 p-4 border-t border-gray-200">
+                                    <Link
+                                        to={`/blogs/${blog._id}`}
+                                        className="mt-auto text-blue-500 font-semibold hover:underline"
+                                    >
+                                        Read More
+                                    </Link>
+                                </div>
+                            </div>
                         ))}
-                    </ul>
-                )}
+                </div>
             </div>
 
             <div className="bg-white mb-10 shadow-md rounded-lg p-6 mt-4">
