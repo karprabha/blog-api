@@ -19,11 +19,11 @@ const uploadImageValidator = (req, res, next) => {
             return res.status(400).json({ msg: "This file is not supported." });
         }
 
-        if (size > 200 * 1024) {
+        if (size > 1024 * 1024) {
             fs.unlinkSync(path);
             return res
                 .status(400)
-                .json({ msg: "This file is too large (Max: 200KB)" });
+                .json({ msg: "This file is too large (Max: 1MB)" });
         }
 
         return next();
