@@ -20,6 +20,7 @@ const Blogs = () => {
             const response = await fetch(
                 `${API_URI}/api/v1/blogs?limit=10000000`,
                 {
+                    next: { revalidate: 60 },
                     method: "GET",
                 }
             );
@@ -69,6 +70,7 @@ const Blogs = () => {
             const response = await fetch(
                 `${API_URI}/api/v1/blogs?limit=10000000`,
                 {
+                    next: { revalidate: 60 },
                     method: "GET",
                 }
             );
