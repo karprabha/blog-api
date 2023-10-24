@@ -11,7 +11,7 @@
         "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > dependencygraph.svg"
     },
     "engines": {
-        "node": ">=14.20.1"
+        "node": ">=18.17.1 <19.0.0"
     },
     "keywords": [],
     "author": "Prabhakar Yadav",
