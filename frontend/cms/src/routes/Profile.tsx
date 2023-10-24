@@ -52,6 +52,7 @@ const Profile = () => {
     const failedAuth = useFailedAuth();
 
     const effectRun = useRef(false);
+    const errRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const location = useLocation();
@@ -59,7 +60,9 @@ const Profile = () => {
 
     const [avatarInput, setAvatarInput] = useState("");
     const [avatarFile, setAvatarFile] = useState<File>();
+    const [imageUploading, setImageUploading] = useState(false);
     const [showAvatarUpdateModal, setShowAvatarUpdateModal] = useState(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     const decoded: JwtPayload = jwt_decode(auth.accessToken);
     const { user_id } = decoded;
@@ -87,7 +90,6 @@ const Profile = () => {
                 }
             } catch (err) {
                 console.error(err);
-
                 failedAuth(location);
             }
         };
@@ -102,6 +104,10 @@ const Profile = () => {
             effectRun.current = true;
         };
     }, []);
+
+    useEffect(() => {
+        setErrorMessages([]);
+    }, [avatarInput, avatarFile]);
 
     const updateAvatarWithUrl = async (avatar_url: string) => {
         try {
@@ -126,9 +132,21 @@ const Profile = () => {
                     }
                     return prevState;
                 });
+
+                setShowAvatarUpdateModal(false);
                 return true;
             } else if (response.status === 401) {
                 failedAuth(location);
+            } else {
+                const { errors, msg } = await response.json();
+
+                if (errors) {
+                    const newErrorMessages = errors.map(
+                        (error: { msg: string }) => error.msg
+                    );
+                    setErrorMessages(newErrorMessages);
+                } else if (msg) setErrorMessages([msg]);
+                errRef.current?.focus();
             }
         } catch (err) {
             console.error(err);
@@ -146,6 +164,7 @@ const Profile = () => {
                 body: formData,
             });
 
+            setImageUploading(false);
             if (response.ok) {
                 const { url } = await response.json();
                 updateAvatarWithUrl(url);
@@ -153,10 +172,18 @@ const Profile = () => {
             } else if (response.status === 401) {
                 failedAuth(location);
             } else {
-                const err = await response.json();
-                console.log(err);
+                const { errors, msg } = await response.json();
+
+                if (errors) {
+                    const newErrorMessages = errors.map(
+                        (error: { msg: string }) => error.msg
+                    );
+                    setErrorMessages(newErrorMessages);
+                } else if (msg) setErrorMessages([msg]);
+                errRef.current?.focus();
             }
         } catch (err) {
+            setImageUploading(false);
             console.error(err);
             failedAuth(location);
         }
@@ -168,12 +195,12 @@ const Profile = () => {
         if (avatarInput) {
             updateAvatarWithUrl(avatarInput);
         } else if (avatarFile) {
+            setImageUploading(true);
             updateAvatarWithFile(avatarFile);
         } else {
-            console.log("no option is selected");
+            setErrorMessages(["No option is selected"]);
+            errRef.current?.focus();
         }
-
-        setShowAvatarUpdateModal(false);
     };
 
     const handleAvatarInputChange = (
@@ -204,6 +231,25 @@ const Profile = () => {
                     className={`fixed top-0 left-0 w-full h-screen bg-black bg-opacity-40 z-50 flex items-center justify-center`}
                 >
                     <div className="modal-box p-4 bg-white rounded shadow-lg">
+                        <div ref={errRef}>
+                            {errorMessages.map((errorMessage, index) => (
+                                <p
+                                    key={index}
+                                    className="text-red-500 bg-red-100 p-2 rounded mb-4 text-center"
+                                    aria-live="assertive"
+                                >
+                                    {errorMessage}
+                                </p>
+                            ))}
+                        </div>
+                        {imageUploading && (
+                            <p
+                                className="text-blue-500 bg-blue-100 p-2 rounded mb-4 text-center"
+                                aria-live="assertive"
+                            >
+                                Uploading image... Please wait.
+                            </p>
+                        )}
                         <h2 className="text-2xl font-semibold mb-4">
                             Update Your Avatar
                         </h2>
@@ -233,7 +279,12 @@ const Profile = () => {
                             <div className="flex justify-end">
                                 <button
                                     type="button"
-                                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
+                                    disabled={imageUploading}
+                                    className={`${
+                                        imageUploading
+                                            ? "bg-gray-300 text-gray-500 px-4 py-2 rounded-md mr-2 cursor-not-allowed"
+                                            : "bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
+                                    }`}
                                     onClick={() =>
                                         setShowAvatarUpdateModal(false)
                                     }
@@ -243,7 +294,12 @@ const Profile = () => {
 
                                 <button
                                     type="submit"
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                    disabled={imageUploading}
+                                    className={`${
+                                        imageUploading
+                                            ? "bg-blue-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
+                                            : "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                    }`}
                                 >
                                     Update
                                 </button>
