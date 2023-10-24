@@ -50,13 +50,9 @@ const Users = () => {
             console.error(err);
         }
 
-        return userList.map((user) => {
-            return {
-                params: {
-                    userId: user._id,
-                },
-            };
-        });
+        return userList.map((user) => ({
+            userId: user._id,
+        }));
     };
 
     const GetUserData = async (id: string) => {

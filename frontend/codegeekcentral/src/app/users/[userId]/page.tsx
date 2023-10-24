@@ -4,14 +4,11 @@ import ReactMarkdown from "react-markdown";
 import CodeBlock from "../../components/CodeBlock";
 import users from "@/lib/users";
 
-export async function getStaticPaths() {
+export async function generateStaticParams() {
     const { GetAllUserIds } = users();
     const paths = await GetAllUserIds();
 
-    return {
-        paths,
-        fallback: false,
-    };
+    return paths;
 }
 
 const PublicUserProfile = async ({ params }) => {

@@ -33,13 +33,9 @@ const Blogs = () => {
             console.error(err);
         }
 
-        return blogList.map((blog) => {
-            return {
-                params: {
-                    blogId: blog._id,
-                },
-            };
-        });
+        return blogList.map((blog) => ({
+            blogId: blog._id,
+        }));
     };
 
     const GetBlogData = async (id: string) => {

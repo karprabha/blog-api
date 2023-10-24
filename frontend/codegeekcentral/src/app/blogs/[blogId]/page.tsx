@@ -24,14 +24,11 @@ type BlogPostType = {
     updatedAt: string;
 };
 
-export async function getStaticPaths() {
+export async function generateStaticParams() {
     const { GetAllBlogIds } = blogs();
     const paths = await GetAllBlogIds();
 
-    return {
-        paths,
-        fallback: false,
-    };
+    return paths;
 }
 
 const BlogPost = async ({ params }) => {
