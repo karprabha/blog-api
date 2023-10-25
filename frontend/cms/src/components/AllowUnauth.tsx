@@ -6,8 +6,6 @@ const AllowUnauth = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    console.log("here", auth);
-
     return auth?.accessToken ? (
         <Navigate to={from} state={{ from: location }} replace />
     ) : (

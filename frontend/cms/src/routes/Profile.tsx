@@ -84,7 +84,7 @@ const Profile = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
+
                     isMounted && setUser(data);
                     isMounted && setLoading(false);
                 } else if (response.status === 401) {
