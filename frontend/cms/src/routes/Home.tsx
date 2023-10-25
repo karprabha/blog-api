@@ -17,15 +17,25 @@ interface Blog {
 }
 
 const Home = () => {
+    const [loading, setLoading] = useState(true);
     const [blogPosts, setBlogPosts] = useState([]);
 
     useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
         const fetchData = async () => {
             try {
-                const response = await fetch(`${API_URI}/api/v1/blogs`);
+                const response = await fetch(`${API_URI}/api/v1/blogs`, {
+                    method: "GET",
+                    signal: controller.signal,
+                });
+
                 if (response.ok) {
                     const data = await response.json();
-                    setBlogPosts(data.results);
+
+                    isMounted && setBlogPosts(data.results);
+                    isMounted && setLoading(false);
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -33,7 +43,22 @@ const Home = () => {
         };
 
         fetchData();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
     }, []);
+
+    if (loading) {
+        return (
+            <>
+                <div className="flex justify-center items-center h-screen bg-gray-100">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
+            </>
+        );
+    }
 
     return (
         <div className="container mx-auto mt-5 mb-10 px-4">

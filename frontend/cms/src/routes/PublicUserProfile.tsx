@@ -54,6 +54,7 @@ const PublicUserProfile = () => {
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<UserProfileData | null>(null);
 
     if (auth && auth.accessToken) {
@@ -81,8 +82,8 @@ const PublicUserProfile = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data);
                     isMounted && setUser(data);
+                    isMounted && setLoading(false);
                 } else if (response.status === 401) {
                     failedAuth(location);
                 }
@@ -99,6 +100,16 @@ const PublicUserProfile = () => {
             controller.abort();
         };
     }, []);
+
+    if (loading) {
+        return (
+            <>
+                <div className="flex justify-center items-center h-screen bg-gray-100">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
