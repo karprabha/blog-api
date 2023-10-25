@@ -2,6 +2,23 @@
 
 ![CodeGeekCentral Logo](./docs/images/codegeekcentral-logo.png)
 
+-   [Project Overview](#project-overview)
+-   [Quick Links](#quick-links)
+-   [Backend](#backend)
+    -   [API Endpoints](#api-endpoints)
+    -   [Technical Details](#technical-details)
+-   [Frontend: CodeGeekCentral-CMS](#frontend-codegeekcentral-cms)
+    -   [Key Features](#key-features)
+-   [Frontend: CodeGeekCentral (Main Site)](#frontend-codegeekcentral-main-site)
+    -   [SSR and SEO](#ssr-and-seo)
+-   [Upcoming Features](#upcoming-features)
+-   [Contributing](#contributing)
+    -   [Setting Up the Development Environment](#setting-up-the-development-environment)
+        -   [Backend](#backend)
+        -   [CMS](#cms)
+        -   [Main Site](#main-site)
+-   [Credits](#credits)
+
 ## Project Overview
 
 Welcome to CodeGeekCentral, your comprehensive blogging platform that brings together bloggers, readers, and content enthusiasts. CodeGeekCentral is a JAMstack-powered platform, empowers users to share their thoughts, explore exciting content, and engage with the community. Whether you're a seasoned writer or an avid reader, CodeGeekCentral is your go-to destination for all things blogs.
@@ -175,6 +192,10 @@ For working on the main site:
     ```bash
     npm run dev
     ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## Credits
 
