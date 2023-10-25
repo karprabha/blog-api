@@ -51,7 +51,6 @@ const Profile = () => {
     const { auth } = useAuth();
     const failedAuth = useFailedAuth();
 
-    const effectRun = useRef(false);
     const errRef = useRef<HTMLInputElement>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -94,14 +93,11 @@ const Profile = () => {
             }
         };
 
-        if (effectRun.current) {
-            getUser();
-        }
+        getUser();
 
         return () => {
             isMounted = false;
             controller.abort();
-            effectRun.current = true;
         };
     }, []);
 

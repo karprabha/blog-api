@@ -30,7 +30,6 @@ const EditBlogPost = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const effectRun = useRef(false);
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -83,14 +82,11 @@ const EditBlogPost = () => {
             }
         };
 
-        if (effectRun.current) {
-            getBlog();
-        }
+        getBlog();
 
         return () => {
             isMounted = false;
             controller.abort();
-            effectRun.current = true;
         };
     }, []);
 

@@ -1,7 +1,7 @@
 import useFetch from "../hooks/useFetch";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import useFailedAuth from "../hooks/useFailedAuth";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import useAuth from "../hooks/useAuth";
 import remarkGfm from "remark-gfm";
@@ -51,8 +51,6 @@ const PublicUserProfile = () => {
     const { auth } = useAuth();
     const failedAuth = useFailedAuth();
 
-    const effectRun = useRef(false);
-
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
@@ -94,14 +92,11 @@ const PublicUserProfile = () => {
             }
         };
 
-        if (effectRun.current) {
-            getUser();
-        }
+        getUser();
 
         return () => {
             isMounted = false;
             controller.abort();
-            effectRun.current = true;
         };
     }, []);
 
