@@ -69,6 +69,92 @@ We have exciting plans for the future, including:
 
 We welcome contributions from the community! If you'd like to get involved, please follow our [Contribution Guidelines](./CONTRIBUTING.md) to help us improve CodeGeekCentral.
 
+## Setting Up the Development Environment
+
+### Backend
+
+If you intend to work on the backend of CodeGeekCentral, follow these steps:
+
+1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+    ```bash
+    git clone https://github.com/karprabha/blog-api
+    ```
+2. Change your working directory to the backend:
+    ```bash
+    cd blog-api/backend
+    ```
+3. Rename the \`**.env.example**\` file to \`**.env**\` and configure the following environment variables:
+    ```env
+    MONGODB_URI=your_mongodb_uri
+    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+    CLOUDINARY_API_KEY=your_cloudinary_api_key
+    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+    JWT_SECRET=your_jwt_secret
+    REFRESH_TOKEN_SECRET=your_refresh_token_secret
+    ACCESS_TOKEN_EXPIRY=your_access_token_expiry
+    REFRESH_TOKEN_EXPIRY=your_refresh_token_expiry
+    COOKIE_MAX_AGE=your_cookie_max_age
+    NODE_ENV=development
+    MORGAN_LOG_FORMAT=dev
+    CMS_URI=http://localhost:5173
+    CLIENT_URI=http://localhost:5000
+    ```
+4. Generate new values for JWT_SECRET and REFRESH_TOKEN_SECRET using:
+    ```bash
+    node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+    ```
+5. To start the development server, run:
+    ```bash
+    npm run dev
+    ```
+
+### CMS
+
+For CMS development, these are the steps:
+
+1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+    ```bash
+    git clone https://github.com/karprabha/blog-api
+    ```
+2. Change your working directory to the CMS frontend:
+    ```bash
+    cd blog-api/frontend/cms
+    ```
+3. Rename the \`**.env.example**\` file to \`**.env**\` and set your environment variables:
+    ```env
+    VITE_API_URI=http://localhost:3000
+    VITE_DEMO_USERNAME=your_demo_username
+    VITE_DEMO_PASSWORD=your_demo_password
+    ```
+4. To start the development server, run:
+    ```bash
+    npm start
+    ```
+
+### Main Site
+
+For working on the main site:
+
+1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+    ```bash
+    git clone https://github.com/karprabha/blog-api
+    ```
+2. Change your working directory to the main site frontend:
+    ```bash
+    cd blog-api/frontend/codegeekcentral
+    ```
+3. Rename the \`**.env.local.example**\` file to \`**.env.local**\` and configure the following environment variables:
+
+    ```env
+    NEXT_PUBLIC_API_URI=http://localhost:3000
+    NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_measurement_id
+    ```
+
+4. To start the server, run:
+    ```bash
+    npm run dev
+    ```
+
 ## Credits
 
 We'd like to express our gratitude to the following resources:
