@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
@@ -38,7 +38,6 @@ const BlogPost = () => {
     const [blog, setBlog] = useState<BlogPostType | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const effectRun = useRef(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -70,14 +69,11 @@ const BlogPost = () => {
             }
         };
 
-        if (effectRun.current) {
-            getBlog();
-        }
+        getBlog();
 
         return () => {
             isMounted = false;
             controller.abort();
-            effectRun.current = true;
         };
     }, []);
 
