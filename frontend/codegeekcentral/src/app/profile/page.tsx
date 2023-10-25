@@ -60,6 +60,7 @@ const Profile = () => {
     const [avatarInput, setAvatarInput] = useState("");
     const [avatarFile, setAvatarFile] = useState<File>();
     const [imageUploading, setImageUploading] = useState(false);
+    const [avatarUpdating, setAvatarUpdating] = useState(false);
     const [showAvatarUpdateModal, setShowAvatarUpdateModal] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
@@ -108,6 +109,7 @@ const Profile = () => {
                 body: JSON.stringify({ avatar_url }),
             });
 
+            setAvatarUpdating(false);
             if (response.ok) {
                 setUser((prevState) => {
                     if (prevState) {
@@ -122,6 +124,7 @@ const Profile = () => {
                     return prevState;
                 });
 
+                setImageUploading(false);
                 setShowAvatarUpdateModal(false);
                 return true;
             } else if (response.status === 401) {
@@ -138,6 +141,7 @@ const Profile = () => {
                 errRef.current?.focus();
             }
         } catch (err) {
+            setAvatarUpdating(false);
             console.error(err);
             failedAuth();
         }
@@ -153,7 +157,6 @@ const Profile = () => {
                 body: formData,
             });
 
-            setImageUploading(false);
             if (response.ok) {
                 const { url } = await response.json();
                 updateAvatarWithUrl(url);
@@ -163,6 +166,7 @@ const Profile = () => {
             } else {
                 const { errors, msg } = await response.json();
 
+                setImageUploading(false);
                 if (errors) {
                     const newErrorMessages = errors.map(
                         (error: { msg: string }) => error.msg
@@ -182,6 +186,7 @@ const Profile = () => {
         e.preventDefault();
 
         if (avatarInput) {
+            setAvatarUpdating(true);
             updateAvatarWithUrl(avatarInput);
         } else if (avatarFile) {
             setImageUploading(true);
@@ -239,6 +244,14 @@ const Profile = () => {
                                 Uploading image... Please wait.
                             </p>
                         )}
+                        {avatarUpdating && (
+                            <p
+                                className="text-blue-500 bg-blue-100 p-2 rounded mb-4 text-center"
+                                aria-live="assertive"
+                            >
+                                Updating avatar... Please wait.
+                            </p>
+                        )}
                         <h2 className="text-2xl font-semibold mb-4">
                             Update Your Avatar
                         </h2>
@@ -268,9 +281,9 @@ const Profile = () => {
                             <div className="flex justify-end">
                                 <button
                                     type="button"
-                                    disabled={imageUploading}
+                                    disabled={imageUploading || avatarUpdating}
                                     className={`${
-                                        imageUploading
+                                        imageUploading || avatarUpdating
                                             ? "bg-gray-300 text-gray-500 px-4 py-2 rounded-md mr-2 cursor-not-allowed"
                                             : "bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
                                     }`}
@@ -283,9 +296,9 @@ const Profile = () => {
 
                                 <button
                                     type="submit"
-                                    disabled={imageUploading}
+                                    disabled={imageUploading || avatarUpdating}
                                     className={`${
-                                        imageUploading
+                                        imageUploading || avatarUpdating
                                             ? "bg-blue-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
                                             : "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                                     }`}
