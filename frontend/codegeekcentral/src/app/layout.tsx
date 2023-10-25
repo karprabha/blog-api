@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     keywords:
         "coding, programming, tech tutorials, web development, software engineering, technology trends",
     authors: [{ name: "Prabhakar Yadav" }],
+    icons: {
+        icon: "favicon.ico",
+    },
 };
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
