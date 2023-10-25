@@ -94,7 +94,7 @@ We have exciting plans for the future, including:
 
 ### CMS
 
-![CMS Dependency Graph](./docs/dependency-graph/CMS.svg)
+![CMS Dependency Graph](./docs/dependency-graph/cms.svg)
 
 ### Main Site
 
