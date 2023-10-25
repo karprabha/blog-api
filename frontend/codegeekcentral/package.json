@@ -6,7 +6,8 @@
         "dev": "set \"BROWSER=none\" && start chrome http://localhost:5000 -incognito && next dev -p 5000 --turbo",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > ../../docs/dependency-graph/codegeekcentral.svg"
     },
     "dependencies": {
         "date-fns": "^2.30.0",
@@ -25,6 +26,7 @@
         "@types/react-dom": "^18",
         "@types/react-syntax-highlighter": "^15.5.9",
         "autoprefixer": "^10",
+        "dependency-cruiser": "^15.0.0",
         "eslint": "^8",
         "eslint-config-next": "13.5.6",
         "postcss": "^8",
