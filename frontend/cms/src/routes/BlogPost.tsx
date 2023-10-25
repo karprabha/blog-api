@@ -44,7 +44,7 @@ const BlogPost = () => {
     const failedAuth = useFailedAuth();
     const navigate = useNavigate();
 
-    const [author, setAuthor] = useState(false);
+    const [isAuthor, setIsAuthor] = useState(false);
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<BlogPostType | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -56,7 +56,7 @@ const BlogPost = () => {
         const { user_id } = decoded;
 
         if (user_id === blog?.author._id) {
-            setAuthor(true);
+            setIsAuthor(true);
         }
     }
 
@@ -170,7 +170,7 @@ const BlogPost = () => {
     return (
         <>
             <div className="bg-white rounded-lg shadow-lg p-6 my-10">
-                {author && (
+                {isAuthor && (
                     <div className="mb-4 flex justify-end">
                         <button
                             onClick={handlePublishToggle}

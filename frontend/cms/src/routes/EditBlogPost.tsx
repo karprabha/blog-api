@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useFailedAuth from "../hooks/useFailedAuth";
+import useAuth from "../hooks/useAuth";
+import jwt_decode from "jwt-decode";
 
 const API_URI = import.meta.env.VITE_API_URI;
 
@@ -20,16 +22,24 @@ type BlogPostType = {
     cover_image_credit: string;
 };
 
+interface JwtPayload {
+    user_id: string;
+    iat: number;
+    exp: number;
+}
+
 const EditBlogPost = () => {
     const fetch = useFetch();
-    const failedAuth = useFailedAuth();
+    const { auth } = useAuth();
     const params = useParams();
+    const failedAuth = useFailedAuth();
 
     const titleRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
     const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -51,6 +61,15 @@ const EditBlogPost = () => {
         setPublished(blog.published);
         setCoverImageURL(blog.cover_image_url);
         setCoverImageCredit(blog.cover_image_credit);
+
+        if (auth && auth.accessToken) {
+            const decoded: JwtPayload = jwt_decode(auth.accessToken);
+            const { user_id } = decoded;
+
+            if (user_id !== blog.author._id) {
+                navigate(from, { replace: true });
+            }
+        }
     };
 
     useEffect(() => {
