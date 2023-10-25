@@ -37,10 +37,19 @@ async function userCreate(
     console.log(`Added user: ${username}`);
 }
 
-async function blogCreate(author, title, content, published) {
+async function blogCreate(
+    author,
+    title,
+    cover_image_url,
+    cover_image_credit,
+    content,
+    published
+) {
     const blog = new Blog({
         author,
         title,
+        cover_image_url,
+        cover_image_credit,
         content,
         published,
     });
@@ -67,19 +76,23 @@ async function createData() {
         console.log("Connecting to MongoDB...");
         await mongoose.connect(mongoDB);
 
-        await userCreate("John", "Doe", "johndoe", "password123", "admin");
-        await userCreate("Jane", "Smith", "janesmith", "securepwd", "user");
+        await userCreate("John", "Doe", "johndoe", "Password@123", "admin");
+        await userCreate("Jane", "Smith", "janesmith", "Secure@pwd123", "user");
 
         await blogCreate(
             users[0],
             "My First Blog Post",
-            "This is the content of my first blog post.",
+            "https://res.cloudinary.com/dn3rb7yf5/image/upload/v1698014147/samples/landscapes/beach-boat.jpg",
+            "cloudinary",
+            "# This is the content of my first blog post.",
             true
         );
         await blogCreate(
             users[0],
             "Another Blog Entry",
-            "This is another blog post.",
+            "https://res.cloudinary.com/dn3rb7yf5/image/upload/v1698014147/samples/landscapes/beach-boat.jpg",
+            "cloudinary",
+            "# This is another blog post.",
             false
         );
 
