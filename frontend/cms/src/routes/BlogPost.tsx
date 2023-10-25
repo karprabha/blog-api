@@ -7,6 +7,8 @@ import CodeBlock from "../components/CodeBlock";
 import remarkGfm from "remark-gfm";
 import CommentSection from "../components/CommentSection";
 import format from "date-fns/format";
+import useAuth from "../hooks/useAuth";
+import jwt_decode from "jwt-decode";
 
 const API_URI = import.meta.env.VITE_API_URI;
 
@@ -28,17 +30,35 @@ type BlogPostType = {
     updatedAt: string;
 };
 
+interface JwtPayload {
+    user_id: string;
+    iat: number;
+    exp: number;
+}
+
 const BlogPost = () => {
     const fetch = useFetch();
+    const { auth } = useAuth();
+
     const params = useParams();
     const failedAuth = useFailedAuth();
     const navigate = useNavigate();
 
+    const [author, setAuthor] = useState(false);
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<BlogPostType | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const location = useLocation();
+
+    if (auth && auth.accessToken) {
+        const decoded: JwtPayload = jwt_decode(auth.accessToken);
+        const { user_id } = decoded;
+
+        if (user_id === blog?.author._id) {
+            setAuthor(true);
+        }
+    }
 
     useEffect(() => {
         let isMounted = true;
@@ -150,32 +170,34 @@ const BlogPost = () => {
     return (
         <>
             <div className="bg-white rounded-lg shadow-lg p-6 my-10">
-                <div className="mb-4 flex justify-end">
-                    <button
-                        onClick={handlePublishToggle}
-                        className={`mr-2 px-4 py-2 rounded ${
-                            blog.published
-                                ? "bg-green-500 hover:bg-green-600"
-                                : "bg-gray-500 hover:bg-gray-600"
-                        } text-white`}
-                    >
-                        {blog.published ? "Published" : "Unpublished"}
-                    </button>
+                {author && (
+                    <div className="mb-4 flex justify-end">
+                        <button
+                            onClick={handlePublishToggle}
+                            className={`mr-2 px-4 py-2 rounded ${
+                                blog.published
+                                    ? "bg-green-500 hover:bg-green-600"
+                                    : "bg-gray-500 hover:bg-gray-600"
+                            } text-white`}
+                        >
+                            {blog.published ? "Published" : "Unpublished"}
+                        </button>
 
-                    <Link
-                        to={`/blogs/${params.id}/edit`}
-                        className="mr-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
-                    >
-                        Edit
-                    </Link>
+                        <Link
+                            to={`/blogs/${params.id}/edit`}
+                            className="mr-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                        >
+                            Edit
+                        </Link>
 
-                    <button
-                        onClick={handleDelete}
-                        className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
-                    >
-                        Delete
-                    </button>
-                </div>
+                        <button
+                            onClick={handleDelete}
+                            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                )}
 
                 <ReactMarkdown className="mt-4 mb-2 prose prose-pre:p-0">
                     {"# " + blog.title}
