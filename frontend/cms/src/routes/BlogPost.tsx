@@ -51,15 +51,6 @@ const BlogPost = () => {
 
     const location = useLocation();
 
-    if (auth && auth.accessToken) {
-        const decoded: JwtPayload = jwt_decode(auth.accessToken);
-        const { user_id } = decoded;
-
-        if (user_id === blog?.author._id) {
-            setIsAuthor(true);
-        }
-    }
-
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
@@ -79,6 +70,17 @@ const BlogPost = () => {
 
                     isMounted && setBlog(blog);
                     isMounted && setLoading(false);
+
+                    if (isMounted && auth && auth.accessToken) {
+                        const decoded: JwtPayload = jwt_decode(
+                            auth.accessToken
+                        );
+                        const { user_id } = decoded;
+
+                        if (user_id === blog?.author._id) {
+                            setIsAuthor(true);
+                        }
+                    }
                 } else if (response.status === 401) {
                     failedAuth(location);
                 }
