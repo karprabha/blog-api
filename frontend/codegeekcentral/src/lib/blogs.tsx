@@ -42,6 +42,7 @@ const Blogs = () => {
         let blogData = {};
         try {
             const response = await fetch(`${API_URI}/api/v1/blogs/${id}`, {
+                next: { revalidate: 3600 },
                 method: "GET",
             });
 

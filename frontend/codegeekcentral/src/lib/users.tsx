@@ -59,6 +59,7 @@ const Users = () => {
         let userData: UserProfileData = {} as UserProfileData;
         try {
             const response = await fetch(`${API_URI}/api/v1/users/${id}`, {
+                next: { revalidate: 60 },
                 method: "GET",
             });
 
