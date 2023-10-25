@@ -8,7 +8,7 @@
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > dependencygraph.svg",
+        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > ../../docs/dependency-graph/cms.svg",
         "test": "vitest"
     },
     "dependencies": {
