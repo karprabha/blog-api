@@ -57,6 +57,7 @@ const Profile = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [user, setUser] = useState<UserProfileData | null>(null);
 
+    const [loading, setLoading] = useState(true);
     const [avatarInput, setAvatarInput] = useState("");
     const [avatarFile, setAvatarFile] = useState<File>();
     const [imageUploading, setImageUploading] = useState(false);
@@ -80,6 +81,7 @@ const Profile = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setUser(data);
+                    setLoading(false);
                 } else if (response.status === 401) {
                     failedAuth();
                 }
@@ -217,6 +219,16 @@ const Profile = () => {
             setAvatarInput("");
         }
     };
+
+    if (loading) {
+        return (
+            <>
+                <div className="flex justify-center items-center h-screen bg-gray-100">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
