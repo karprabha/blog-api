@@ -82,6 +82,8 @@ We have exciting plans for the future, including:
 -   **Search and Discovery**: Implement advanced search and discovery functionalities to help users find relevant content.
 -   **Featured Section**: Showcase top-rated and handpicked blog posts to provide users with a curated reading experience.
 
+## Dependency Graph
+
 ## Contributing
 
 We welcome contributions from the community! If you'd like to get involved, please follow our [Contribution Guidelines](./CONTRIBUTING.md) to help us improve CodeGeekCentral.
