@@ -76,14 +76,19 @@ We welcome contributions from the community! If you'd like to get involved, plea
 If you intend to work on the backend of CodeGeekCentral, follow these steps:
 
 1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+
     ```bash
     git clone https://github.com/karprabha/blog-api
     ```
+
 2. Change your working directory to the backend:
+
     ```bash
     cd blog-api/backend
     ```
+
 3. Rename the \`**.env.example**\` file to \`**.env**\` and configure the following environment variables:
+
     ```env
     MONGODB_URI=your_mongodb_uri
     CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
@@ -99,11 +104,15 @@ If you intend to work on the backend of CodeGeekCentral, follow these steps:
     CMS_URI=http://localhost:5173
     CLIENT_URI=http://localhost:5000
     ```
+
 4. Generate new values for JWT_SECRET and REFRESH_TOKEN_SECRET using:
+
     ```bash
     node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
     ```
+
 5. To start the development server, run:
+
     ```bash
     npm run dev
     ```
@@ -113,20 +122,27 @@ If you intend to work on the backend of CodeGeekCentral, follow these steps:
 For CMS development, these are the steps:
 
 1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+
     ```bash
     git clone https://github.com/karprabha/blog-api
     ```
+
 2. Change your working directory to the CMS frontend:
+
     ```bash
     cd blog-api/frontend/cms
     ```
+
 3. Rename the \`**.env.example**\` file to \`**.env**\` and set your environment variables:
+
     ```env
     VITE_API_URI=http://localhost:3000
     VITE_DEMO_USERNAME=your_demo_username
     VITE_DEMO_PASSWORD=your_demo_password
     ```
+
 4. To start the development server, run:
+
     ```bash
     npm start
     ```
@@ -136,13 +152,17 @@ For CMS development, these are the steps:
 For working on the main site:
 
 1. Clone the [CodeGeekCentral repository](https://github.com/karprabha/blog-api):
+
     ```bash
     git clone https://github.com/karprabha/blog-api
     ```
+
 2. Change your working directory to the main site frontend:
+
     ```bash
     cd blog-api/frontend/codegeekcentral
     ```
+
 3. Rename the \`**.env.local.example**\` file to \`**.env.local**\` and configure the following environment variables:
 
     ```env
@@ -151,6 +171,7 @@ For working on the main site:
     ```
 
 4. To start the server, run:
+
     ```bash
     npm run dev
     ```
