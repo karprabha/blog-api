@@ -12,6 +12,10 @@
 -   [Frontend: CodeGeekCentral (Main Site)](#frontend-codegeekcentral-main-site)
     -   [SSR and SEO](#ssr-and-seo)
 -   [Upcoming Features](#upcoming-features)
+-   [Dependency Graph](#dependency-graph)
+    -   [Backend](#backend)
+    -   [CMS](#cms)
+    -   [Main Site](#main-site)
 -   [Contributing](#contributing)
     -   [Setting Up the Development Environment](#setting-up-the-development-environment)
         -   [Backend](#backend)
@@ -83,6 +87,18 @@ We have exciting plans for the future, including:
 -   **Featured Section**: Showcase top-rated and handpicked blog posts to provide users with a curated reading experience.
 
 ## Dependency Graph
+
+### Backend
+
+![Backend Dependency Graph](./docs/dependency-graph/server.svg)
+
+### CMS
+
+![CMS Dependency Graph](./docs/dependency-graph/CMS.svg)
+
+### Main Site
+
+![Main Site Dependency Graph](./docs/dependency-graph/codegeekcentral.svg)
 
 ## Contributing
 
