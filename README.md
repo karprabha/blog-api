@@ -90,15 +90,15 @@ We have exciting plans for the future, including:
 
 ### Backend
 
-![Backend Dependency Graph](./docs/dependency-graph/server.svg)
+![Backend Dependency Graph](./backend/dependency-graph.svg)
 
 ### CMS
 
-![CMS Dependency Graph](./docs/dependency-graph/cms.svg)
+![CMS Dependency Graph](./frontend/cms/dependency-graph.svg)
 
 ### Main Site
 
-![Main Site Dependency Graph](./docs/dependency-graph/codegeekcentral.svg)
+![Main Site Dependency Graph](./frontend/codegeekcentral/dependency-graph.svg)
 
 ## Contributing
 

@@ -19,11 +19,6 @@
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M101,-27C101,-27 161,-27 161,-27 167,-27 173,-33 173,-39 173,-39 173,-67 173,-67 173,-73 167,-79 161,-79 161,-79 101,-79 101,-79 95,-79 89,-73 89,-67 89,-67 89,-39 89,-39 89,-33 95,-27 101,-27"/>
 <text text-anchor="middle" x="131" y="-67.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">__tests__</text>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_src/context</title>
-<path fill="#ffffff" stroke="black" stroke-width="2" d="M655,-103C655,-103 729,-103 729,-103 735,-103 741,-109 741,-115 741,-115 741,-143 741,-143 741,-149 735,-155 729,-155 729,-155 655,-155 655,-155 649,-155 643,-149 643,-143 643,-143 643,-115 643,-115 643,-109 649,-103 655,-103"/>
-<text text-anchor="middle" x="692" y="-143.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">context</text>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_src/components</title>
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M324,-294C324,-294 623,-294 623,-294 629,-294 635,-300 635,-306 635,-306 635,-424 635,-424 635,-430 629,-436 623,-436 623,-436 324,-436 324,-436 318,-436 312,-430 312,-424 312,-424 312,-306 312,-306 312,-300 318,-294 324,-294"/>
@@ -33,6 +28,11 @@
 <title>cluster_src/hooks</title>
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M330.5,-146C330.5,-146 617.5,-146 617.5,-146 623.5,-146 629.5,-152 629.5,-158 629.5,-158 629.5,-230 629.5,-230 629.5,-236 623.5,-242 617.5,-242 617.5,-242 330.5,-242 330.5,-242 324.5,-242 318.5,-236 318.5,-230 318.5,-230 318.5,-158 318.5,-158 318.5,-152 324.5,-146 330.5,-146"/>
 <text text-anchor="middle" x="474" y="-230.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">hooks</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_src/context</title>
+<path fill="#ffffff" stroke="black" stroke-width="2" d="M655,-103C655,-103 729,-103 729,-103 735,-103 741,-109 741,-115 741,-115 741,-143 741,-143 741,-149 735,-155 729,-155 729,-155 655,-155 655,-155 649,-155 643,-149 643,-143 643,-143 643,-115 643,-115 643,-109 649,-103 655,-103"/>
+<text text-anchor="middle" x="692" y="-143.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">context</text>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_src/layouts</title>

@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > ../../docs/dependency-graph/codegeekcentral.svg"
+        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > dependency-graph.svg"
     },
     "dependencies": {
         "date-fns": "^2.30.0",

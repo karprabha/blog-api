@@ -34,11 +34,6 @@
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M129,-268C129,-268 329,-268 329,-268 335,-268 341,-274 341,-280 341,-280 341,-338 341,-338 341,-344 335,-350 329,-350 329,-350 129,-350 129,-350 123,-350 117,-344 117,-338 117,-338 117,-280 117,-280 117,-274 123,-268 129,-268"/>
 <text text-anchor="middle" x="229" y="-338.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">components</text>
 </g>
-<g id="clust8" class="cluster">
-<title>cluster_src/app/profile</title>
-<path fill="#ffffff" stroke="black" stroke-width="2" d="M260,-574C260,-574 313,-574 313,-574 319,-574 325,-580 325,-586 325,-586 325,-674 325,-674 325,-680 319,-686 313,-686 313,-686 260,-686 260,-686 254,-686 248,-680 248,-674 248,-674 248,-586 248,-586 248,-580 254,-574 260,-574"/>
-<text text-anchor="middle" x="286.5" y="-674.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">profile</text>
-</g>
 <g id="clust6" class="cluster">
 <title>cluster_src/app/components</title>
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M376,-460C376,-460 443,-460 443,-460 449,-460 455,-466 455,-472 455,-472 455,-560 455,-560 455,-566 449,-572 443,-572 443,-572 376,-572 376,-572 370,-572 364,-566 364,-560 364,-560 364,-472 364,-472 364,-466 370,-460 376,-460"/>
@@ -48,6 +43,11 @@
 <title>cluster_src/app/login</title>
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M44,-574C44,-574 97,-574 97,-574 103,-574 109,-580 109,-586 109,-586 109,-674 109,-674 109,-680 103,-686 97,-686 97,-686 44,-686 44,-686 38,-686 32,-680 32,-674 32,-674 32,-586 32,-586 32,-580 38,-574 44,-574"/>
 <text text-anchor="middle" x="70.5" y="-674.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">login</text>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_src/app/profile</title>
+<path fill="#ffffff" stroke="black" stroke-width="2" d="M260,-574C260,-574 313,-574 313,-574 319,-574 325,-580 325,-586 325,-586 325,-674 325,-674 325,-680 319,-686 313,-686 313,-686 260,-686 260,-686 254,-686 248,-680 248,-674 248,-674 248,-586 248,-586 248,-580 254,-574 260,-574"/>
+<text text-anchor="middle" x="286.5" y="-674.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">profile</text>
 </g>
 <g id="clust10" class="cluster">
 <title>cluster_src/app/users</title>

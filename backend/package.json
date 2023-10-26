@@ -8,7 +8,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./bin/www",
         "dev": "set \"BROWSER=none\" && start chrome http://localhost:3000 -incognito && SET DEBUG=blog-api:* && nodemon -e js ./bin/www",
-        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > ../docs/dependency-graph/server.svg"
+        "architecture": "depcruise --include-only \"^src\" --output-type dot src | dot -T svg > dependency-graph.svg"
     },
     "engines": {
         "node": ">=18.17.1 <19.0.0"
