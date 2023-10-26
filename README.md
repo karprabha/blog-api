@@ -13,14 +13,14 @@
     -   [SSR and SEO](#ssr-and-seo)
 -   [Upcoming Features](#upcoming-features)
 -   [Dependency Graph](#dependency-graph)
-    -   [Backend](#backend)
-    -   [CMS](#cms)
-    -   [Main Site](#main-site)
+    -   [Backend](#backend-dependency)
+    -   [CMS](#cms-dependency)
+    -   [Main Site](#main-site-dependency)
 -   [Contributing](#contributing)
     -   [Setting Up the Development Environment](#setting-up-the-development-environment)
-        -   [Backend](#backend)
-        -   [CMS](#cms)
-        -   [Main Site](#main-site)
+        -   [Backend](#backend-setup)
+        -   [CMS](#cms-setup)
+        -   [Main Site](#main-site-setup)
 -   [Credits](#credits)
 
 ## Project Overview
@@ -88,15 +88,15 @@ We have exciting plans for the future, including:
 
 ## Dependency Graph
 
-### Backend
+### Backend Dependency
 
 ![Backend Dependency Graph](./backend/dependency-graph.svg)
 
-### CMS
+### CMS Dependency
 
 ![CMS Dependency Graph](./frontend/cms/dependency-graph.svg)
 
-### Main Site
+### Main Site Dependency
 
 ![Main Site Dependency Graph](./frontend/codegeekcentral/dependency-graph.svg)
 
@@ -106,7 +106,7 @@ We welcome contributions from the community! If you'd like to get involved, plea
 
 ## Setting Up the Development Environment
 
-### Backend
+### Backend Setup
 
 If you intend to work on the backend of CodeGeekCentral, follow these steps:
 
@@ -152,7 +152,7 @@ If you intend to work on the backend of CodeGeekCentral, follow these steps:
     npm run dev
     ```
 
-### CMS
+### CMS Setup
 
 For CMS development, these are the steps:
 
@@ -182,7 +182,7 @@ For CMS development, these are the steps:
     npm start
     ```
 
-### Main Site
+### Main Site Setup
 
 For working on the main site:
 
