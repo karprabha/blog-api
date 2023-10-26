@@ -74,7 +74,7 @@ const CreateBlogPost = () => {
     };
 
     return (
-        <div className="flex my-20 items-center justify-center h-full bg-gray-100">
+        <div className="flex my-20 items-center justify-center h-full bg-gray-100 mx-4">
             <div className="bg-white w-full max-w-screen-md p-8 rounded-lg shadow-lg">
                 <div ref={errRef}>
                     {errorMessages.map((errorMessage, index) => (

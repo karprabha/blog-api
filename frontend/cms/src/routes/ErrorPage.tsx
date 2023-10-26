@@ -10,7 +10,7 @@ const ErrorPage = () => {
     console.error(error);
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div className="flex flex-col items-center justify-center h-screen mx-4">
             <h1 className="text-3xl font-semibold mb-4">Oops!</h1>
             <p className="text-lg text-gray-600 mb-4">
                 Sorry, an unexpected error has occurred.

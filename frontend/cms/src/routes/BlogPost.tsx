@@ -171,7 +171,7 @@ const BlogPost = () => {
 
     return (
         <>
-            <div className="bg-white rounded-lg shadow-lg p-6 my-10">
+            <div className="bg-white rounded-lg shadow-lg p-6 my-10 mx-4">
                 {isAuthor && (
                     <div className="mb-4 flex justify-end">
                         <button

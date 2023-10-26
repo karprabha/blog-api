@@ -113,7 +113,7 @@ const PublicUserProfile = () => {
 
     return (
         <>
-            <div className="bg-white mt-10 shadow-md rounded-lg p-6">
+            <div className="bg-white mt-10 shadow-md rounded-lg p-6 mx-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex justify-center items-center">
                         {user && (
@@ -151,7 +151,7 @@ const PublicUserProfile = () => {
                 </div>
             </div>
 
-            <div className="bg-gray-100 py-6 mt-4">
+            <div className="bg-gray-100 py-6 mt-4 mx-4">
                 <h2 className="text-2xl font-semibold mb-4">Blogs</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {user &&
@@ -181,7 +181,7 @@ const PublicUserProfile = () => {
                 </div>
             </div>
 
-            <div className="bg-white mb-10 shadow-lg rounded-lg p-6 mt-4">
+            <div className="bg-white mb-10 shadow-lg rounded-lg p-6 mt-4 mx-4">
                 <h2 className="text-3xl font-semibold text-gray-900 mb-6">
                     Recent Comments
                 </h2>
