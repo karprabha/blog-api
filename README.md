@@ -27,6 +27,8 @@
 
 Welcome to CodeGeekCentral, your comprehensive blogging platform that brings together bloggers, readers, and content enthusiasts. CodeGeekCentral is a JAMstack-powered platform, empowers users to share their thoughts, explore exciting content, and engage with the community. Whether you're a seasoned writer or an avid reader, CodeGeekCentral is your go-to destination for all things blogs.
 
+![CodeGeekCentral Home](./docs/images/1.png)
+
 ### Quick Links
 
 -   [Main Site](https://codegeekcentral.vercel.app/)
