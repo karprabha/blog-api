@@ -45,7 +45,7 @@ const BlogPost: React.FC<BlogParam> = async ({ params }) => {
 
     return (
         <>
-            <div className="bg-white rounded-lg shadow-lg p-6 my-10">
+            <div className="bg-white rounded-lg shadow-lg p-6 my-10 mx-4">
                 <ReactMarkdown className="mt-4 mb-2 prose prose-pre:p-0">
                     {"# " + blog.title}
                 </ReactMarkdown>
