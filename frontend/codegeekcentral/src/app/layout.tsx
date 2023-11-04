@@ -24,6 +24,8 @@ export const metadata: Metadata = {
 };
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GOOGLE_ADSENSE_CA_PUB_ID =
+    process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CA_PUB_ID;
 
 export default function RootLayout({
     children,
@@ -44,6 +46,11 @@ export default function RootLayout({
           gtag('config', '${GA_MEASUREMENT_ID}');
         `}
             </Script>
+            <Script
+                async
+                src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_CA_PUB_ID}`}
+                crossOrigin="anonymous"
+            ></Script>
 
             <body className={roboto.className}>
                 <AuthProvider>
